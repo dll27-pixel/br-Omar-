@@ -1,0 +1,988 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>عيادة الدكتور عمر الحمداني - EasyClinic</title>
+
+<style>
+:root {
+--sidebar-bg: #1e293b;
+--sidebar-hover: #334155;
+--primary: #00a884;
+--primary-dark: #008f6f;
+--accent-orange: #f59e0b;
+--accent-blue: #0284c7;
+--accent-red: #ef4444;
+--accent-purple: #8b5cf6;
+--bg-main: #0f172a;
+--card-bg: #1e293b;
+--text-main: #f8fafc;
+--text-muted: #94a3b8;
+--border-color: #334155;
+--chart-bg: #0b1320;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif; -webkit-tap-highlight-color: transparent; }
+body { background-color: var(--bg-main); color: var(--text-main); min-height: 100vh; display: flex; overflow-x: hidden; }
+
+/* الشريط الجانبي (Sidebar) مثل فيديو EasyClinic */
+aside {
+width: 80px;
+background: var(--sidebar-bg);
+border-left: 1px solid var(--border-color);
+display: flex;
+flex-direction: column;
+align-items: center;
+padding: 12px 0;
+gap: 12px;
+flex-shrink: 0;
+z-index: 50;
+}
+@media (min-width: 768px) {
+aside { width: 100px; }
+}
+
+.brand-logo {
+display: flex;
+flex-direction: column;
+align-items: center;
+margin-bottom: 8px;
+text-align: center;
+}
+.brand-logo svg { width: 34px; height: 34px; fill: var(--primary); }
+.brand-name { font-size: 0.65rem; font-weight: 900; color: #38bdf8; margin-top: 4px; }
+
+.nav-tile {
+width: 70px;
+height: 64px;
+background: transparent;
+border: 1px solid transparent;
+border-radius: 12px;
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+gap: 5px;
+color: var(--text-muted);
+cursor: pointer;
+transition: all 0.2s;
+}
+.nav-tile svg { width: 22px; height: 22px; fill: currentColor; }
+.nav-tile span { font-size: 0.65rem; font-weight: 700; }
+.nav-tile.active, .nav-tile:hover {
+background: var(--sidebar-hover);
+color: #38bdf8;
+border-color: #38bdf8;
+}
+
+/* المحتوى الرئيسي */
+.app-main {
+flex: 1;
+display: flex;
+flex-direction: column;
+height: 100vh;
+overflow-y: auto;
+}
+
+/* الشريط العلوي */
+.topbar {
+background: var(--sidebar-bg);
+border-bottom: 1px solid var(--border-color);
+padding: 10px 18px;
+display: flex;
+justify-content: space-between;
+align-items: center;
+flex-wrap: wrap;
+gap: 10px;
+}
+.clinic-title { font-size: 1.1rem; font-weight: 900; color: white; display: flex; align-items: center; gap: 8px; }
+.clinic-badge { font-size: 0.7rem; background: rgba(0,168,132,0.2); color: var(--primary); padding: 3px 8px; border-radius: 6px; font-weight: bold; }
+
+.topbar-btns { display: flex; align-items: center; gap: 8px; }
+.btn-top {
+background: #334155;
+color: white;
+border: none;
+padding: 7px 12px;
+border-radius: 8px;
+font-size: 0.75rem;
+font-weight: bold;
+cursor: pointer;
+display: inline-flex;
+align-items: center;
+gap: 5px;
+}
+.btn-top:active { background: #475569; }
+
+/* الألواح والمحتوى */
+.content-area { padding: 14px; flex: 1; }
+.panel-view { display: none; }
+.panel-view.active { display: block; }
+
+/* بطاقات المرضى */
+.search-row {
+display: flex;
+gap: 10px;
+margin-bottom: 14px;
+flex-wrap: wrap;
+}
+.input-dark {
+background: #0f172a;
+border: 1px solid var(--border-color);
+color: white;
+padding: 9px 12px;
+border-radius: 8px;
+font-size: 0.85rem;
+outline: none;
+}
+.input-dark:focus { border-color: var(--primary); }
+
+.btn-emerald {
+background: var(--primary);
+color: white;
+border: none;
+padding: 9px 14px;
+border-radius: 8px;
+font-weight: 800;
+font-size: 0.8rem;
+cursor: pointer;
+}
+
+.casesheet-grid {
+display: grid;
+grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+gap: 12px;
+}
+.casesheet-card {
+background: var(--card-bg);
+border: 1px solid var(--border-color);
+border-radius: 12px;
+padding: 14px;
+display: flex;
+flex-direction: column;
+gap: 8px;
+border-right: 4px solid var(--primary);
+}
+.cs-header { display: flex; justify-content: space-between; align-items: flex-start; }
+.cs-name { font-size: 0.95rem; font-weight: 900; color: white; }
+.cs-phone { font-size: 0.75rem; color: var(--text-muted); }
+.cs-diag { font-size: 0.75rem; background: #0f172a; padding: 6px 8px; border-radius: 6px; border: 1px solid #334155; }
+.cs-actions { display: flex; gap: 6px; margin-top: 6px; }
+.btn-action-sm {
+flex: 1;
+padding: 6px;
+border-radius: 6px;
+border: 1px solid var(--border-color);
+background: #334155;
+color: white;
+font-size: 0.75rem;
+font-weight: bold;
+cursor: pointer;
+text-align: center;
+}
+
+/* ================= مخطط الأسنان التشريحي التفاعلي (Dental Chart) ================= */
+.chart-container {
+background: var(--chart-bg);
+border: 2px solid #1e293b;
+border-radius: 16px;
+padding: 18px 10px;
+position: relative;
+box-shadow: inset 0 0 40px rgba(0,0,0,0.8);
+overflow-x: auto;
+background-image:
+linear-gradient(rgba(56, 189, 248, 0.05) 1px, transparent 1px),
+linear-gradient(90deg, rgba(56, 189, 248, 0.05) 1px, transparent 1px);
+background-size: 20px 20px;
+}
+
+.chart-header-bar {
+display: flex;
+justify-content: space-between;
+align-items: center;
+margin-bottom: 12px;
+padding: 0 10px;
+}
+.chart-midline {
+position: absolute;
+top: 10px;
+bottom: 10px;
+left: 50%;
+width: 2px;
+background: rgba(255, 255, 255, 0.25);
+pointer-events: none;
+}
+
+.teeth-arch {
+display: flex;
+justify-content: center;
+gap: 2px;
+position: relative;
+margin: 12px 0;
+}
+@media (min-width: 600px) {
+.teeth-arch { gap: 4px; }
+}
+
+/* شكل السن التشريحي الحقيقي مع الجذر والتاج */
+.tooth-anatomical {
+width: 24px;
+height: 72px;
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: flex-start;
+cursor: pointer;
+position: relative;
+user-select: none;
+transition: transform 0.15s;
+}
+@media (min-width: 768px) {
+.tooth-anatomical { width: 34px; height: 95px; }
+}
+.tooth-anatomical:hover {
+transform: scale(1.15);
+z-index: 20;
+}
+
+.tooth-svg-shape {
+width: 100%;
+height: 100%;
+filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
+}
+.tooth-number-label {
+font-size: 0.6rem;
+font-weight: 900;
+color: #94a3b8;
+margin-top: 2px;
+}
+
+/* تلوين وحالات الأسنان المباشرة */
+.tooth-anatomical.has-endo .root-path { fill: #ef4444 !important; }
+.tooth-anatomical.has-filling .crown-path { fill: #38bdf8 !important; }
+.tooth-anatomical.has-crown .crown-path { fill: #f59e0b !important; }
+.tooth-anatomical.has-extraction { opacity: 0.35; filter: grayscale(1); }
+.tooth-anatomical.has-extraction::after {
+content: "✕";
+position: absolute;
+top: 40%;
+left: 50%;
+transform: translate(-50%, -50%);
+color: #ef4444;
+font-size: 1.5rem;
+font-weight: 900;
+}
+
+/* البالونات الطافية فوق السن (Bubble Notes) */
+.bubble-note-tag {
+position: absolute;
+background: #f59e0b;
+color: #0f172a;
+font-size: 0.65rem;
+font-weight: 900;
+padding: 3px 6px;
+border-radius: 6px;
+white-space: nowrap;
+box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+pointer-events: none;
+z-index: 30;
+}
+.bubble-note-tag.upper { top: -24px; }
+.bubble-note-tag.lower { bottom: -24px; }
+.bubble-note-tag::after {
+content: '';
+position: absolute;
+left: 50%;
+transform: translateX(-50%);
+border: 4px solid transparent;
+}
+.bubble-note-tag.upper::after { top: 100%; border-top-color: #f59e0b; }
+.bubble-note-tag.lower::after { bottom: 100%; border-bottom-color: #f59e0b; }
+
+/* شريط الألوان أسفل المخطط */
+.chart-colors-bar {
+display: flex;
+justify-content: center;
+gap: 10px;
+margin-top: 14px;
+background: #1e293b;
+padding: 8px;
+border-radius: 20px;
+max-width: 400px;
+margin-left: auto;
+margin-right: auto;
+}
+.color-dot {
+width: 22px;
+height: 22px;
+border-radius: 50%;
+cursor: pointer;
+border: 2px solid transparent;
+transition: transform 0.15s;
+}
+.color-dot:hover, .color-dot.active { transform: scale(1.2); border-color: white; }
+
+/* ================= تبويب التواصل (WhatsApp) ================= */
+.filter-tabs-bar {
+display: flex;
+gap: 6px;
+margin-bottom: 14px;
+overflow-x: auto;
+padding-bottom: 4px;
+}
+.filter-pill {
+background: #1e293b;
+color: var(--text-muted);
+border: 1px solid var(--border-color);
+padding: 6px 12px;
+border-radius: 20px;
+font-size: 0.75rem;
+font-weight: bold;
+cursor: pointer;
+white-space: nowrap;
+}
+.filter-pill.active {
+background: var(--primary);
+color: white;
+border-color: var(--primary);
+}
+
+/* النوافذ المنبثقة (Modals) */
+.modal-wrap {
+position: fixed;
+inset: 0;
+background: rgba(0,0,0,0.75);
+display: none;
+align-items: center;
+justify-content: center;
+z-index: 1000;
+padding: 12px;
+}
+.modal-box {
+background: #1e293b;
+border: 1px solid #334155;
+border-radius: 16px;
+width: 100%;
+max-width: 500px;
+max-height: 90vh;
+overflow-y: auto;
+box-shadow: 0 25px 50px -12px rgba(0,0,0,0.7);
+}
+.modal-head {
+background: #0f172a;
+padding: 14px 18px;
+display: flex;
+justify-content: space-between;
+align-items: center;
+font-weight: 900;
+border-bottom: 1px solid #334155;
+}
+.modal-content-inner { padding: 16px; display: flex; flex-direction: column; gap: 12px; }
+
+/* الطباعة الاحترافية لخطة العلاج */
+@media print {
+body * { visibility: hidden; }
+#printableTreatmentPlan, #printableTreatmentPlan * { visibility: visible; }
+#printableTreatmentPlan {
+position: fixed;
+left: 0;
+top: 0;
+width: 100%;
+background: white !important;
+color: black !important;
+padding: 30px;
+box-shadow: none !important;
+}
+}
+</style>
+</head>
+<body>
+
+<!-- القائمة الجانبية (الأيقونات العمودية مثل الفيديوهات) -->
+<aside>
+<div class="brand-logo">
+<svg viewBox="0 0 24 24">
+<path d="M18.6 6.62c-1.44-3.82-4.9-4.62-6.6-4.62s-5.16.8-6.6 4.62c-1.57 4.18-.76 8.59.31 12.08.38 1.25 1.13 2.3 2.19 3.03.74.52 1.63.78 2.54.74.88-.04 1.56-.7 1.56-1.58v-4.89h0c0-.55.45-1 1-1s1 .45 1 1v4.89c0 .88.68 1.54 1.56 1.58.91.04 1.8-.22 2.54-.74 1.06-.73 1.81-1.78 2.19-3.03 1.07-3.49 1.88-7.9.31-12.08z"/>
+</svg>
+<div class="brand-name">EasyClinic</div>
+</div>
+
+<button class="nav-tile active" onclick="showTab('casesheetTab', this)">
+<svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+<span>الكيسشيت</span>
+</button>
+
+<button class="nav-tile" onclick="showTab('dentalChartTab', this)">
+<svg viewBox="0 0 24 24"><path d="M18.6 6.62c-1.44-3.82-4.9-4.62-6.6-4.62s-5.16.8-6.6 4.62c-1.57 4.18-.76 8.59.31 12.08.38 1.25 1.13 2.3 2.19 3.03.74.52 1.63.78 2.54.74.88-.04 1.56-.7 1.56-1.58v-4.89h0c0-.55.45-1 1-1s1 .45 1 1v4.89c0 .88.68 1.54 1.56 1.58.91.04 1.8-.22 2.54-.74 1.06-.73 1.81-1.78 2.19-3.03 1.07-3.49 1.88-7.9.31-12.08z"/></svg>
+<span>الأسنان</span>
+</button>
+
+<button class="nav-tile" onclick="showTab('appointmentsTab', this)">
+<svg viewBox="0 0 24 24"><path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V10h14v10zm0-12H5V6h14v2z"/></svg>
+<span>المواعيد</span>
+</button>
+
+<button class="nav-tile" onclick="showTab('financeTab', this)">
+<svg viewBox="0 0 24 24"><path d="M21 18v1c0 1.1-.9 2-2 2H5c-1.11 0-2-.9-2-2V5c0-1.1.89-2 2-2h14c1.1 0 2 .9 2 2v1h-9c-1.11 0-2 .9-2 2v8c0 1.1.89 2 2 2h9zm-9-2h10V8H12v8zm4-2.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg>
+<span>الدفعات</span>
+</button>
+
+<button class="nav-tile" onclick="showTab('whatsappTab', this)">
+<svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+<span>التواصل</span>
+</button>
+
+<button class="nav-tile" onclick="showTab('auditLogTab', this)">
+<svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 14h-2v-2h2v2zm0-4h-2V7h2v5z"/></svg>
+<span>التحركات</span>
+</button>
+</aside>
+
+<!-- جسم التطبيق الرئيسي -->
+<div class="app-main">
+
+<!-- الشريط العلوي -->
+<header class="topbar">
+<div class="clinic-title">
+<span>عيادة الدكتور عمر الحمداني</span>
+<span class="clinic-badge">طب وجراحة الفم والأسنان</span>
+</div>
+
+<div class="topbar-btns">
+<button class="btn-top" onclick="speakDailySchedule()">
+🔊 قراءة المواعيد
+</button>
+<button class="btn-top" style="background:var(--primary);" onclick="openNewPatientModal()">
+➕ كيسشيت جديد
+</button>
+</div>
+</header>
+
+<div class="content-area">
+
+<!-- ================= 1. تبويب الكيسشيت (سجل المرضى) ================= -->
+<section id="casesheetTab" class="panel-view active">
+<div class="search-row">
+<input type="text" id="patientSearchBox" oninput="filterPatientsList()" placeholder="🔍 ابحث عن مريض بالاسم أو الهاتف..." class="input-dark" style="flex:1; max-width:320px;">
+<button class="btn-top" style="background:#0284c7;" onclick="exportPatientsCsv()">📊 تصدير Excel</button>
+</div>
+
+<div class="casesheet-grid" id="patientsCardsWrapper"></div>
+</section>
+
+<!-- ================= 2. تبويب مخطط الأسنان وخطة العلاج (نفس الفيديو 100%) ================= -->
+<section id="dentalChartTab" class="panel-view">
+<div class="chart-header-bar">
+<div>
+<h3 style="font-size:1.05rem; font-weight:900; color:#38bdf8;">خطة العلاج ومخطط الأسنان التشريحي</h3>
+<p style="font-size:0.75rem; color:var(--text-muted);">المريض المحدد: <strong id="selectedPatientChartName" style="color:white;">يرجى اختيار مريض من الكيسشيت</strong></p>
+</div>
+
+<div style="display:flex; gap:8px;">
+<button class="btn-top" style="background:#f59e0b; color:#0f172a;" onclick="printTreatmentSheet()">🖨️ طباعة الخطة (A4)</button>
+</div>
+</div>
+
+<!-- المخطط السريري للأسنان -->
+<div class="chart-container" id="dentalChartBox">
+<div class="chart-midline"></div>
+<div style="display:flex; justify-content:space-between; color:#38bdf8; font-weight:900; font-size:0.8rem; padding:0 10px;">
+<span>اليمين (R)</span>
+<span>اليسار (L)</span>
+</div>
+
+<!-- الفك العلوي -->
+<div class="teeth-arch" id="archUpperTeeth"></div>
+
+<!-- الفك السفلي -->
+<div class="teeth-arch" id="archLowerTeeth"></div>
+
+<!-- شريط ألوان التعيين السريع -->
+<div class="chart-colors-bar">
+<div class="color-dot" style="background:#ffffff;" title="سليم" onclick="setChartColor('normal')"></div>
+<div class="color-dot" style="background:#38bdf8;" title="حشوة ضوئية" onclick="setChartColor('filling')"></div>
+<div class="color-dot" style="background:#ef4444;" title="حشوة جذر / عصب" onclick="setChartColor('endo')"></div>
+<div class="color-dot" style="background:#f59e0b;" title="تاج وتلبيس" onclick="setChartColor('crown')"></div>
+<div class="color-dot" style="background:#64748b;" title="قلع سن" onclick="setChartColor('extract')"></div>
+</div>
+</div>
+</section>
+
+<!-- ================= 3. تبويب جدول المواعيد ================= -->
+<section id="appointmentsTab" class="panel-view">
+<div class="search-row">
+<input type="date" id="appointmentDateFilter" onchange="renderAppointments()" class="input-dark">
+<button class="btn-emerald" onclick="openNewAppModal()">➕ حجز موعد</button>
+</div>
+<div id="appointmentsListWrapper" style="display:flex; flex-direction:column; gap:8px;"></div>
+</section>
+
+<!-- ================= 4. تبويب الدفعات المالية والإيرادات ================= -->
+<section id="financeTab" class="panel-view">
+<div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:12px; margin-bottom:16px;">
+<div style="background:#1e293b; padding:14px; border-radius:12px; border-right:4px solid var(--primary);">
+<span style="font-size:0.75rem; color:var(--text-muted);">إجمالي مقبوضات اليوم (كاش):</span>
+<h2 id="totalCashVal" style="color:var(--primary); font-size:1.4rem;">0 دينار</h2>
+</div>
+<div style="background:#1e293b; padding:14px; border-radius:12px; border-right:4px solid #0284c7;">
+<span style="font-size:0.75rem; color:var(--text-muted);">إجمالي مقبوضات اليوم (بطاقة):</span>
+<h2 id="totalCardVal" style="color:#0284c7; font-size:1.4rem;">0 دينار</h2>
+</div>
+<div style="background:#1e293b; padding:14px; border-radius:12px; border-right:4px solid #ef4444;">
+<span style="font-size:0.75rem; color:var(--text-muted);">إجمالي الديون المتبقية:</span>
+<h2 id="totalDebtVal" style="color:#ef4444; font-size:1.4rem;">0 دينار</h2>
+</div>
+</div>
+
+<div id="financeListWrapper" style="display:flex; flex-direction:column; gap:8px;"></div>
+</section>
+
+<!-- ================= 5. تبويب التواصل وواتساب (مثل فيديو EasyClinic) ================= -->
+<section id="whatsappTab" class="panel-view">
+<div class="filter-tabs-bar">
+<button class="filter-pill active" onclick="filterWhatsappGroup('all', this)">كل المرضى</button>
+<button class="filter-pill" onclick="filterWhatsappGroup('ongoing', this)">حالات مستمرة</button>
+<button class="filter-pill" onclick="filterWhatsappGroup('debt', this)">عليهم ديون</button>
+<button class="filter-pill" onclick="filterWhatsappGroup('birthday', this)">أعياد الميلاد هذا الأسبوع</button>
+</div>
+
+<div id="whatsappPatientsList" style="display:flex; flex-direction:column; gap:8px;"></div>
+</section>
+
+<!-- ================= 6. تبويب مراقبة التحركات (Audit Log) ================= -->
+<section id="auditLogTab" class="panel-view">
+<h3 style="margin-bottom:12px; font-size:1rem; color:#38bdf8;">سجل مراقبة تحركات النظام (Audit Trail)</h3>
+<div id="auditLogContainer" style="display:flex; flex-direction:column; gap:8px;"></div>
+</section>
+
+</div>
+</div>
+
+<!-- ================= نافذة تعديل السن وإضافة بالون الملاحظة (Bubble Note) ================= -->
+<div class="modal-wrap" id="toothActionModal">
+<div class="modal-box">
+<div class="modal-head">
+<span>إجراء للسن التشريحي رقم: <strong id="lblSelectedToothNum" style="color:#38bdf8;"></strong></span>
+<button style="background:none; border:none; color:white; font-size:1.4rem; cursor:pointer;" onclick="closeModal('toothActionModal')">×</button>
+</div>
+<div class="modal-content-inner">
+<div>
+<label style="font-size:0.8rem; font-weight:bold;">نوع المعالجة السريرية:</label>
+<select id="toothOpSelection" class="input-dark" style="width:100%; margin-top:4px;">
+<option value="حشوة بيضاء">حشوة بيضاء (Composite Filling)</option>
+<option value="حشوة جذر">حشوة جذر / سحب عصب (Endo Treatment)</option>
+<option value="قلع سن">قلع سن (Extraction)</option>
+<option value="تغليف السن">تغليف السن (Crown)</option>
+<option value="جسر">جسر أسنان (Bridge)</option>
+<option value="تنظيف السن">تنظيف وتكليس (Scaling)</option>
+<option value="زراعة سن">زراعة (Implant)</option>
+</select>
+</div>
+
+<div>
+<label style="font-size:0.8rem; font-weight:bold;">نص بالون الملاحظة (Bubble Note):</label>
+<input type="text" id="toothBubbleText" placeholder="مثال: حشوة جذر، قلع سن العقل..." class="input-dark" style="width:100%; margin-top:4px;">
+</div>
+
+<button class="btn-emerald" style="width:100%;" onclick="applyToothChanges()">تطبيق وتثبيت على المخطط</button>
+</div>
+</div>
+</div>
+
+<!-- ================= نافذة كيسشيت جديد ================= -->
+<div class="modal-wrap" id="newPatientModal">
+<div class="modal-box">
+<div class="modal-head">
+<span>فتح كيسشيت لمراجع جديد</span>
+<button style="background:none; border:none; color:white; font-size:1.4rem; cursor:pointer;" onclick="closeModal('newPatientModal')">×</button>
+</div>
+<form onsubmit="handleSaveNewPatient(event)" class="modal-content-inner">
+<input type="text" id="newPtName" required placeholder="اسم المراجع الكامل" class="input-dark">
+<div style="display:flex; gap:8px;">
+<input type="number" id="newPtAge" required placeholder="العمر" class="input-dark" style="flex:1;">
+<input type="tel" id="newPtPhone" required placeholder="رقم الهاتف (واتساب)" class="input-dark" style="flex:1;">
+</div>
+<input type="text" id="newPtAddress" placeholder="السكن / العنوان" class="input-dark">
+<input type="text" id="newPtHealth" placeholder="الحالة الصحية وتنبيه الحساسية (ضغط، سكر، بنسلين...)" class="input-dark" style="border-color:#ef4444;">
+<button type="submit" class="btn-emerald">حفظ الكيسشيت</button>
+</form>
+</div>
+</div>
+
+<!-- ================= ورقة الطباعة A4 لخطة العلاج (مثل الفيديو) ================= -->
+<div id="printableTreatmentPlan" style="display:none;">
+<div style="display:flex; justify-content:space-between; align-items:center; border-bottom:2px solid #00a884; padding-bottom:12px; margin-bottom:16px;">
+<div>
+<h1 style="font-size:1.4rem; color:#00a884;">عيادة الدكتور عمر الحمداني</h1>
+<p style="font-size:0.85rem; color:#666;">طب وجراحة الفم وتجميل الأسنان</p>
+</div>
+<div style="text-align:left; font-size:0.8rem;">
+<p>التاريخ: <span id="printDateSpan"></span></p>
+<p>المريض: <strong id="printPatientNameSpan">--</strong></p>
+</div>
+</div>
+
+<h3 style="text-align:center; margin-bottom:14px;">خطة العلاج المعتمدة للمراجع (Treatment Plan)</h3>
+<div id="printPlanChartClone" style="margin-bottom:20px;"></div>
+
+<div style="border-top:1px solid #ccc; padding-top:10px; font-size:0.8rem; display:flex; justify-content:space-between;">
+<div>توقيع د. عمر الحمداني: _________________</div>
+<div>ختم العيادة</div>
+</div>
+</div>
+
+<!-- ================= جافاسكريبت فائق القوة والموثوقية ================= -->
+<script>
+// رسم السن التشريحي الحقيقي SVG مع التاج والجذر
+function getAnatomicalToothSvg(toothNum, isUpper) {
+// تفريق شكل القواطع عن الأضراس
+const isMolar = [18,17,16,26,27,28,48,47,46,36,37,38].includes(Number(toothNum));
+const isPremolar = [15,14,24,25,45,44,34,35].includes(Number(toothNum));
+
+if (isUpper) {
+// فك علوي (الجذر للأعلى والتاج للأسفل)
+if (isMolar) {
+return &lt;svg viewBox="0 0 50 100" class="tooth-svg-shape"&gt; &lt;!-- ثلاث جذور للضرس العلوي --&gt; &lt;path class="root-path" d="M12,45 C8,25 6,10 10,2 C13,10 18,25 20,45 Z" fill="#e2e8f0" stroke="#475569" stroke-width="1.5"/&gt; &lt;path class="root-path" d="M22,45 C24,20 25,5 26,1 C28,5 29,20 30,45 Z" fill="#cbd5e1" stroke="#475569" stroke-width="1.5"/&gt; &lt;path class="root-path" d="M32,45 C35,25 40,10 42,2 C45,10 44,25 38,45 Z" fill="#e2e8f0" stroke="#475569" stroke-width="1.5"/&gt; &lt;!-- التاج --&gt; &lt;path class="crown-path" d="M6,45 C4,65 5,85 15,92 C25,95 30,95 38,92 C46,85 47,65 44,45 Z" fill="#ffffff" stroke="#334155" stroke-width="2"/&gt; &lt;/svg&gt;;
+} else {
+return &lt;svg viewBox="0 0 35 100" class="tooth-svg-shape"&gt; &lt;!-- جذر واحد طويل --&gt; &lt;path class="root-path" d="M10,40 C14,18 16,5 17.5,1 C19,5 21,18 25,40 Z" fill="#e2e8f0" stroke="#475569" stroke-width="1.5"/&gt; &lt;!-- التاج الأمامي --&gt; &lt;path class="crown-path" d="M5,40 C4,60 7,85 17.5,90 C28,85 31,60 30,40 Z" fill="#ffffff" stroke="#334155" stroke-width="2"/&gt; &lt;/svg&gt;;
+}
+} else {
+// فك سفلي (التاج للأعلى والجذر للأسفل)
+if (isMolar) {
+return &lt;svg viewBox="0 0 50 100" class="tooth-svg-shape"&gt; &lt;!-- التاج --&gt; &lt;path class="crown-path" d="M6,55 C4,35 5,15 15,8 C25,5 30,5 38,8 C46,15 47,35 44,55 Z" fill="#ffffff" stroke="#334155" stroke-width="2"/&gt; &lt;!-- جذران للضرس السفلي --&gt; &lt;path class="root-path" d="M12,55 C9,75 8,90 12,98 C15,90 19,75 22,55 Z" fill="#e2e8f0" stroke="#475569" stroke-width="1.5"/&gt; &lt;path class="root-path" d="M28,55 C32,75 35,90 38,98 C42,90 41,75 38,55 Z" fill="#e2e8f0" stroke="#475569" stroke-width="1.5"/&gt; &lt;/svg&gt;;
+} else {
+return &lt;svg viewBox="0 0 35 100" class="tooth-svg-shape"&gt; &lt;!-- التاج --&gt; &lt;path class="crown-path" d="M5,60 C4,40 7,15 17.5,10 C28,15 31,40 30,60 Z" fill="#ffffff" stroke="#334155" stroke-width="2"/&gt; &lt;!-- الجذر --&gt; &lt;path class="root-path" d="M10,60 C14,82 16,95 17.5,99 C19,95 21,82 25,60 Z" fill="#e2e8f0" stroke="#475569" stroke-width="1.5"/&gt; &lt;/svg&gt;;
+}
+}
+}
+
+// بيانات العيادة المخزنة
+const ClinicData = {
+patients: [
+{
+id: "P_101",
+name: "قاسم حافظ",
+phone: "07707992444",
+age: 29,
+gender: "ذكر",
+birthDate: "1995-06-03",
+address: "الموصل - الزهور",
+healthAlert: "حساسية بنسلين",
+status: "ongoing", // مستمرة
+debt: 25000,
+payments: [
+{ id: 1, amount: 60000, type: "cash", date: "2026-09-10" },
+{ id: 2, amount: 45000, type: "card", date: "2026-09-18" }
+ ],
+teethData: {
+16: { status: "endo", note: "حشوة جذر" },
+18: { status: "extract", note: "قلع سن العقل" },
+21: { status: "filling", note: "حشوة بيضاء" }
+}
+},
+{
+id: "P_102",
+name: "منى سلمان",
+phone: "07719876543",
+age: 26,
+gender: "أنثى",
+birthDate: "2000-09-27",
+address: "الموصل - النور",
+healthAlert: "",
+status: "ongoing",
+debt: 0,
+payments: [
+{ id: 3, amount: 50000, type: "cash", date: "2026-09-24" }
+ ],
+teethData: {
+36: { status: "crown", note: "تغليف السن" }
+}
+}
+],
+appointments: [
+{ id: "A_1", patientName: "قاسم حافظ", time: "16:30", date: new Date().toISOString().split('T')[0], proc: "جلسة حشوة عصب سن 16" }
+],
+auditLogs: [
+{ user: "د. عمر الحمداني", action: "تسجيل دخول إلى النظام", time: "04:00 م" },
+{ user: "السكرتير", action: "إضافة مراجع جديد: منى سلمان", time: "04:15 م" }
+ ],
+currentPatientId: "P_101",
+activeToothNum: null
+};
+
+// بدء تشغيل البرنامج وبناء المخطط
+window.addEventListener('DOMContentLoaded', () => {
+buildAnatomicalChart();
+renderPatientsCards();
+renderAppointments();
+renderFinanceSummary();
+renderAuditLogs();
+selectPatientForChart("P_101");
+});
+
+// التنقل بين القوائم
+function showTab(tabId, el) {
+document.querySelectorAll('.panel-view').forEach(p => p.classList.remove('active'));
+document.querySelectorAll('.nav-tile').forEach(b => b.classList.remove('active'));
+document.getElementById(tabId).classList.add('active');
+if (el) el.classList.add('active');
+}
+
+// بناء مخطط الأسنان التشريحي
+function buildAnatomicalChart() {
+const upWrap = document.getElementById('archUpperTeeth');
+const lowWrap = document.getElementById('archLowerTeeth');
+upWrap.innerHTML = '';
+lowWrap.innerHTML = '';
+
+// FDI: علوي 18-11 و 21-28
+const upperTeeth = [18,17,16,15,14,13,12,11, 21,22,23,24,25,26,27,28];
+// FDI: سفلي 48-41 و 31-38
+const lowerTeeth = [48,47,46,45,44,43,42,41, 31,32,33,34,35,36,37,38];
+
+upperTeeth.forEach(num => upWrap.appendChild(createToothNode(num, true)));
+lowerTeeth.forEach(num => lowWrap.appendChild(createToothNode(num, false)));
+}
+
+function createToothNode(num, isUpper) {
+const div = document.createElement('div');
+div.className = 'tooth-anatomical';
+div.id = tooth_elem_${num}; div.innerHTML =
+<div class="tooth-number-label">${num}&lt;/div&gt; ${getAnatomicalToothSvg(num, isUpper)}
+`;
+div.onclick = () => openToothAction(num);
+return div;
+}
+
+// ربط مريض بمخطط الأسنان
+function selectPatientForChart(pId) {
+ClinicData.currentPatientId = pId;
+const p = ClinicData.patients.find(x => x.id === pId);
+if (!p) return;
+
+document.getElementById('selectedPatientChartName').innerText = ``${p.name} (${p.phone});
+
+// تنظيف المخطط وإعادة رسم بيانات السن للمريض
+document.querySelectorAll('.tooth-anatomical').forEach(node => {
+node.className = 'tooth-anatomical';
+const oldTag = node.querySelector('.bubble-note-tag');
+if (oldTag) oldTag.remove();
+});
+
+if (p.teethData) {
+Object.keys(p.teethData).forEach(tNum => {
+const t = p.teethData[tNum];
+const node = document.getElementById(tooth_elem_${tNum}`);
+if (node) {
+if (t.status === 'endo') node.classList.add('has-endo');
+if (t.status === 'filling') node.classList.add('has-filling');
+if (t.status === 'crown') node.classList.add('has-crown');
+if (t.status === 'extract') node.classList.add('has-extraction');
+
+if (t.note) {
+const isUpper = [18,17,16,15,14,13,12,11,21,22,23,24,25,26,27,28].includes(Number(tNum));
+const tag = document.createElement('div');
+tag.className = bubble-note-tag ${isUpper ? 'upper' : 'lower'}`;
+tag.innerText = t.note;
+node.appendChild(tag);
+}
+}
+});
+}
+}
+
+function openToothAction(num) {
+ClinicData.activeToothNum = num;
+document.getElementById('lblSelectedToothNum').innerText = num;
+const p = ClinicData.patients.find(x => x.id === ClinicData.currentPatientId);
+if (p && p.teethData && p.teethData[num]) {
+document.getElementById('toothBubbleText').value = p.teethData[num].note || '';
+} else {
+document.getElementById('toothBubbleText').value = '';
+}
+openModal('toothActionModal');
+}
+
+function applyToothChanges() {
+const p = ClinicData.patients.find(x => x.id === ClinicData.currentPatientId);
+const num = ClinicData.activeToothNum;
+const op = document.getElementById('toothOpSelection').value;
+const bubble = document.getElementById('toothBubbleText').value;
+
+if (!p.teethData) p.teethData = {};
+let stat = 'normal';
+if (op.includes('حشوة جذر') || op.includes('عصب')) stat = 'endo';
+else if (op.includes('بيضاء') || op.includes('حشوة')) stat = 'filling';
+else if (op.includes('تغليف') || op.includes('تاج')) stat = 'crown';
+else if (op.includes('قلع')) stat = 'extract';
+
+p.teethData[num] = { status: stat, note: bubble || op };
+logAudit(تعديل إجراء السن${num} للمراجع {op}`);
+selectPatientForChart(p.id);
+closeModal('toothActionModal');
+}
+
+// طباعة خطة العلاج A4 مثل الفيديو
+function printTreatmentSheet() {
+const p = ClinicData.patients.find(x => x.id === ClinicData.currentPatientId);
+if (!p) return;
+
+document.getElementById('printDateSpan').innerText = new Date().toLocaleDateString('ar-EG');
+document.getElementById('printPatientNameSpan').innerText = p.name;
+
+const chartClone = document.getElementById('dentalChartBox').cloneNode(true);
+const wrap = document.getElementById('printPlanChartClone');
+wrap.innerHTML = '';
+wrap.appendChild(chartClone);
+
+window.print();
+}
+
+// عرض المراجعين (الكيسشيت)
+function renderPatientsCards() {
+const wrap = document.getElementById('patientsCardsWrapper');
+wrap.innerHTML = '';
+
+ClinicData.patients.forEach(p => {
+const card = document.createElement('div');
+card.className = 'casesheet-card';
+card.innerHTML = &lt;div class="cs-header"&gt; &lt;div&gt; &lt;div class="cs-name"&gt;${p.name}</div>
+<div class="cs-phone">📞 ${p.phone} | ${p.age} سنة</div>
+</div>
+<span style="font-size:0.7rem; color:#38bdf8; font-weight:bold;">${p.gender || 'مراجع'}&lt;/span&gt; &lt;/div&gt; ${p.healthAlert ? <div style="color:#ef4444; font-size:0.75rem; font-weight:bold;"&gt;⚠️ تنبيه:${p.healthAlert}</div>: ''} &lt;div class="cs-actions"&gt; &lt;button class="btn-action-sm" style="background:#00a884; border-color:#00a884;" onclick="openChartForPatient('${p.id}')">🦷 الأسنان</button>
+<button class="btn-action-sm" onclick="sendWhatsappDirect('${p.phone}', '${p.name}')">💬 واتساب</button>
+</div>
+`;
+wrap.appendChild(card);
+});
+}
+
+function openChartForPatient(pId) {
+selectPatientForChart(pId);
+showTab('dentalChartTab', document.querySelectorAll('.nav-tile')[1]);
+}
+
+// نظام التواصل وواتساب المتقدم
+function filterWhatsappGroup(group, btn) {
+document.querySelectorAll('.filter-pill').forEach(b => b.classList.remove('active'));
+btn.classList.add('active');
+
+const wrap = document.getElementById('whatsappPatientsList');
+wrap.innerHTML = '';
+
+let filtered = ClinicData.patients;
+if (group === 'ongoing') filtered = ClinicData.patients.filter(p => p.status === 'ongoing');
+if (group === 'debt') filtered = ClinicData.patients.filter(p => p.debt > 0);
+
+filtered.forEach(p => {
+const row = document.createElement('div');
+row.style.cssText = "display:flex; justify-content:space-between; align-items:center; background:#1e293b; padding:10px 14px; border-radius:10px; border:1px solid #334155;";
+row.innerHTML = &lt;div&gt; &lt;strong&gt;${p.name}</strong>
+<div style="font-size:0.75rem; color:#94a3b8;">هاتف: {p.debt} د.ع</div>
+</div>
+<button class="btn-top" style="background:#25D366; color:white;" onclick="sendWhatsappDirect('{p.name}')">
+إرسال واتساب 📲
+</button>
+`;
+wrap.appendChild(row);
+});
+}
+
+function sendWhatsappDirect(phone, name) {
+const cleanPhone = phone.replace(/^0/, '964');
+const text = encodeURIComponent(مرحباً أستاذ ${name}، نود تذكيركم بموعدكم القادم في عيادة الدكتور عمر الحمداني لطب وجراحة الأسنان.); window.open(https://wa.me/${cleanPhone}?text=${text}`, '_blank');
+}
+
+// الدفعات المالية والقبض (كاش وبطاقة)
+function renderFinanceSummary() {
+let cashTotal = 0;
+let cardTotal = 0;
+let debtTotal = 0;
+
+const wrap = document.getElementById('financeListWrapper');
+wrap.innerHTML = '';
+
+ClinicData.patients.forEach(p => {
+debtTotal += (p.debt || 0);
+if (p.payments) {
+p.payments.forEach(pay => {
+if (pay.type === 'cash') cashTotal += pay.amount;
+if (pay.type === 'card') cardTotal += pay.amount;
+
+wrap.innerHTML += &lt;div style="display:flex; justify-content:space-between; align-items:center; background:#1e293b; padding:10px 14px; border-radius:10px; border:1px solid #334155;"&gt; &lt;div&gt; &lt;strong&gt;${p.name}</strong>
+<div style="font-size:0.75rem; color:#94a3b8;">{pay.type === 'cash' ? '💵 كاش' : '💳 بطاقة'}</div>
+</div>
+<div style="font-weight:900; color:#38bdf8;">${pay.amount.toLocaleString()} د.ع&lt;/div&gt; &lt;/div&gt;;
+});
+}
+});
+
+document.getElementById('totalCashVal').innerText = cashTotal.toLocaleString() + " د.ع";
+document.getElementById('totalCardVal').innerText = cardTotal.toLocaleString() + " د.ع";
+document.getElementById('totalDebtVal').innerText = debtTotal.toLocaleString() + " د.ع";
+}
+
+// مراقبة التحركات (Audit Trail)
+function logAudit(action) {
+ClinicData.auditLogs.unshift({
+user: "د. عمر الحمداني",
+action: action,
+time: new Date().toLocaleTimeString('ar-EG')
+});
+renderAuditLogs();
+}
+
+function renderAuditLogs() {
+const wrap = document.getElementById('auditLogContainer');
+wrap.innerHTML = '';
+ClinicData.auditLogs.forEach(log => {
+wrap.innerHTML += &lt;div style="display:flex; justify-content:space-between; align-items:center; background:#1e293b; padding:10px; border-radius:8px; border-right:4px solid #00a884; font-size:0.8rem;"&gt; &lt;div&gt;&lt;strong&gt;${log.user}:</strong> latex
+{log.action}&lt;/div&gt; &lt;span style="color:#94a3b8; font-size:0.7rem;"&gt;
+
+{log.time}</span>
+</div>
+`;
+});
+}
+
+// القارئ الصوتي
+function speakDailySchedule() {
+if (!('speechSynthesis' in window)) {
+alert("المتصفح لا يدعم القراءة الصوتية.");
+return;
+}
+let txt = أهلاً دكتور عمر، لديك اليوم ${ClinicData.appointments.length} مواعيد مسجلة في العيادة. الموعد الأول للسيد ${ClinicData.appointments[0].patientName} في الساعة ${ClinicData.appointments[0].time}`;
+const u = new SpeechSynthesisUtterance(txt);
+u.lang = 'ar-SA';
+window.speechSynthesis.speak(u);
+}
+
+// إدارة المودال
+function openModal(id) { document.getElementById(id).style.display = 'flex'; }
+function closeModal(id) { document.getElementById(id).style.display = 'none'; }
+function openNewPatientModal() { openModal('newPatientModal'); }
+
+function handleSaveNewPatient(e) {
+e.preventDefault();
+const p = {
+id: "P_" + Date.now(),
+name: document.getElementById('newPtName').value,
+phone: document.getElementById('newPtPhone').value,
+age: document.getElementById('newPtAge').value,
+address: document.getElementById('newPtAddress').value,
+healthAlert: document.getElementById('newPtHealth').value,
+status: "ongoing",
+debt: 0,
+payments: [],
+teethData: {}
+};
+ClinicData.patients.unshift(p);
+logAudit(إضافة كيسشيت جديد للمريض:${p.name}`);
+renderPatientsCards();
+closeModal('newPatientModal');
+e.target.reset();
+}
+</script>
+</body>
+</html>
