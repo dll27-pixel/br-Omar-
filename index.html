@@ -7,27 +7,28 @@
   
   <style>
     :root {
-      --bg-gradient: radial-gradient(circle at 50% 10%, #0d2838 0%, #081624 50%, #040911 100%);
-      --sidebar-bg: #09131f;
-      --sidebar-hover: #132438;
+      --bg-radial: radial-gradient(circle at 50% 20%, #0d2838 0%, #071624 55%, #030811 100%);
+      --sidebar-bg: #08121d;
+      --sidebar-hover: #122336;
       --primary: #00b48a;
-      --primary-glow: rgba(0, 180, 138, 0.4);
+      --primary-glow: rgba(0, 180, 138, 0.45);
       --accent-blue: #38bdf8;
-      --accent-yellow: #f59e0b;
+      --accent-gold: #f59e0b;
       --accent-red: #ef4444;
       --accent-purple: #a855f7;
-      --card-bg: rgba(18, 32, 51, 0.85);
-      --card-border: #1e3653;
+      --panel-bg: rgba(14, 27, 43, 0.9);
+      --card-bg: rgba(19, 35, 56, 0.75);
+      --card-border: #1e3a5a;
       --text-main: #f8fafc;
       --text-dim: #94a3b8;
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, -apple-system, sans-serif; -webkit-tap-highlight-color: transparent; }
-    body { background: var(--bg-gradient); background-attachment: fixed; color: var(--text-main); min-height: 100vh; display: flex; overflow-x: hidden; }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif; -webkit-tap-highlight-color: transparent; }
+    body { background: var(--bg-radial); background-attachment: fixed; color: var(--text-main); min-height: 100vh; display: flex; overflow-x: hidden; }
 
-    /* القائمة الجانبية الاحترافية */
+    /* الشريط الجانبي */
     aside {
-      width: 80px;
+      width: 78px;
       background: var(--sidebar-bg);
       border-left: 1px solid var(--card-border);
       display: flex;
@@ -37,16 +38,16 @@
       gap: 12px;
       flex-shrink: 0;
       z-index: 40;
-      box-shadow: 4px 0 20px rgba(0,0,0,0.5);
+      box-shadow: 4px 0 20px rgba(0,0,0,0.6);
     }
     @media (min-width: 768px) { aside { width: 95px; } }
 
-    .brand-box { text-align: center; margin-bottom: 8px; }
-    .brand-box svg { width: 36px; height: 36px; fill: var(--primary); filter: drop-shadow(0 0 8px var(--primary-glow)); }
-    .brand-sub { font-size: 0.65rem; font-weight: 900; color: var(--accent-blue); display: block; margin-top: 2px; }
+    .brand-logo { text-align: center; margin-bottom: 6px; }
+    .brand-logo svg { width: 38px; height: 38px; fill: var(--primary); filter: drop-shadow(0 0 10px var(--primary-glow)); }
+    .brand-text { font-size: 0.65rem; font-weight: 900; color: var(--accent-blue); display: block; margin-top: 2px; }
 
     .nav-btn {
-      width: 70px;
+      width: 68px;
       height: 64px;
       background: transparent;
       border: 1px solid transparent;
@@ -55,28 +56,28 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: 5px;
+      gap: 4px;
       color: var(--text-dim);
       cursor: pointer;
       transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
     }
-    .nav-btn svg { width: 22px; height: 22px; fill: currentColor; transition: transform 0.2s; }
-    .nav-btn span { font-size: 0.65rem; font-weight: bold; }
+    .nav-btn svg { width: 22px; height: 22px; fill: currentColor; }
+    .nav-btn span { font-size: 0.65rem; font-weight: 800; }
     .nav-btn:hover { background: var(--sidebar-hover); color: var(--accent-blue); transform: translateY(-2px); }
     .nav-btn.active {
-      background: linear-gradient(135deg, rgba(0, 180, 138, 0.2), rgba(56, 189, 248, 0.15));
+      background: linear-gradient(135deg, rgba(0, 180, 138, 0.25), rgba(56, 189, 248, 0.2));
       color: white;
-      border: 1px solid var(--primary);
-      box-shadow: 0 0 15px rgba(0, 180, 138, 0.3);
+      border-color: var(--primary);
+      box-shadow: 0 0 16px rgba(0, 180, 138, 0.35);
     }
-    .nav-btn.active svg { fill: var(--primary); transform: scale(1.1); }
+    .nav-btn.active svg { fill: var(--primary); }
 
-    /* الحاوية الأساسية */
-    .app-body { flex: 1; display: flex; flex-direction: column; height: 100vh; overflow-y: auto; }
+    /* الحاوية الرئيسية */
+    .app-main { flex: 1; display: flex; flex-direction: column; height: 100vh; overflow-y: auto; }
 
     /* الشريط العلوي */
     .top-header {
-      background: rgba(9, 19, 31, 0.85);
+      background: rgba(8, 18, 29, 0.88);
       backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--card-border);
       padding: 12px 20px;
@@ -89,12 +90,12 @@
       top: 0;
       z-index: 30;
     }
-    .clinic-info h1 { font-size: 1.15rem; font-weight: 900; color: white; display: flex; align-items: center; gap: 8px; }
+    .clinic-title h1 { font-size: 1.15rem; font-weight: 900; color: white; display: flex; align-items: center; gap: 8px; }
     .clinic-badge { font-size: 0.7rem; background: rgba(0, 180, 138, 0.15); color: var(--primary); border: 1px solid var(--primary); padding: 3px 10px; border-radius: 20px; font-weight: bold; }
 
     .header-ctrls { display: flex; gap: 8px; align-items: center; }
-    .btn-ui {
-      background: #132438;
+    .btn-action {
+      background: #122336;
       color: white;
       border: 1px solid var(--card-border);
       padding: 8px 14px;
@@ -107,17 +108,17 @@
       gap: 6px;
       transition: all 0.2s;
     }
-    .btn-ui:hover { background: #1c3552; border-color: var(--accent-blue); transform: translateY(-1px); }
+    .btn-action:hover { background: #1c3552; border-color: var(--accent-blue); transform: translateY(-1px); }
     .btn-emerald { background: var(--primary); border: none; color: #04141d; font-weight: 900; }
-    .btn-emerald:hover { background: #02cfa0; box-shadow: 0 0 15px var(--primary-glow); }
+    .btn-emerald:hover { background: #02cfa0; box-shadow: 0 0 16px var(--primary-glow); }
 
     /* الصفحات والمحتوى */
-    .main-view { padding: 16px; flex: 1; }
+    .content-viewport { padding: 16px; flex: 1; }
     .page-tab { display: none; }
     .page-tab.active { display: block; animation: fadeIn 0.3s ease; }
     @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
 
-    .input-ui {
+    .input-box {
       background: #06101c;
       border: 1px solid var(--card-border);
       color: white;
@@ -127,15 +128,15 @@
       outline: none;
       transition: border 0.2s;
     }
-    .input-ui:focus { border-color: var(--primary); box-shadow: 0 0 10px rgba(0, 180, 138, 0.25); }
+    .input-box:focus { border-color: var(--primary); box-shadow: 0 0 10px rgba(0, 180, 138, 0.25); }
 
-    /* بطاقات المراجعين */
-    .grid-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 14px; margin-top: 16px; }
+    /* بطاقات المراجعين الاحترافية */
+    .patients-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(310px, 1fr)); gap: 14px; margin-top: 16px; }
     .patient-card {
       background: var(--card-bg);
       backdrop-filter: blur(8px);
       border: 1px solid var(--card-border);
-      border-radius: 14px;
+      border-radius: 16px;
       padding: 16px;
       display: flex;
       flex-direction: column;
@@ -143,41 +144,67 @@
       border-right: 5px solid var(--primary);
       transition: all 0.25s;
     }
-    .patient-card:hover { transform: translateY(-3px); box-shadow: 0 8px 25px rgba(0,0,0,0.4); border-color: var(--accent-blue); }
-    .pt-header { display: flex; justify-content: space-between; align-items: flex-start; }
-    .pt-name { font-size: 1.05rem; font-weight: 900; color: white; }
-    .pt-sub { font-size: 0.75rem; color: var(--text-dim); margin-top: 2px; }
-    .pt-footer { display: flex; gap: 8px; margin-top: auto; padding-top: 10px; border-top: 1px solid var(--card-border); }
+    .patient-card:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(0,0,0,0.45); border-color: var(--accent-blue); }
+    
+    .pt-top { display: flex; justify-content: space-between; align-items: flex-start; }
+    .pt-avatar { width: 44px; height: 44px; border-radius: 12px; background: linear-gradient(135deg, #1e3a5a, #0d2838); display: flex; align-items: center; justify-content: center; font-size: 1.3rem; border: 1px solid var(--accent-blue); }
+    .pt-info h3 { font-size: 1.05rem; font-weight: 900; color: white; }
+    .pt-info p { font-size: 0.75rem; color: var(--text-dim); margin-top: 2px; }
+    .pt-dates-badge { font-size: 0.7rem; background: #071422; padding: 4px 8px; border-radius: 8px; border: 1px solid var(--card-border); color: var(--accent-blue); }
 
-    /* ================= مخطط الأسنان التشريحي التفاعلي والمتحرك ================= */
-    .dental-workspace {
-      background: radial-gradient(circle at center, #0c2033 0%, #050d18 100%);
+    .pt-actions { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-top: auto; padding-top: 10px; border-top: 1px solid var(--card-border); }
+    .btn-pt-action {
+      background: #112032;
+      border: 1px solid var(--card-border);
+      color: white;
+      padding: 7px 4px;
+      border-radius: 8px;
+      font-size: 0.72rem;
+      font-weight: bold;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.2s;
+    }
+    .btn-pt-action:hover { background: var(--primary); color: #05101a; border-color: var(--primary); }
+
+    /* ================= تصميم الفكين 3D التشريحي المقوس ================= */
+    .jaw-3d-wrapper {
+      background: radial-gradient(circle at center, #0e243a 0%, #06111e 100%);
       border: 2px solid var(--card-border);
-      border-radius: 20px;
+      border-radius: 22px;
       padding: 24px 10px;
       position: relative;
       overflow-x: auto;
-      box-shadow: inset 0 0 50px rgba(0,0,0,0.8), 0 10px 30px rgba(0,0,0,0.5);
+      box-shadow: inset 0 0 60px rgba(0,0,0,0.85), 0 10px 30px rgba(0,0,0,0.5);
       background-image: 
         linear-gradient(rgba(56, 189, 248, 0.04) 1px, transparent 1px),
         linear-gradient(90deg, rgba(56, 189, 248, 0.04) 1px, transparent 1px);
       background-size: 24px 24px;
     }
-    .chart-midline {
-      position: absolute;
-      top: 15px;
-      bottom: 15px;
-      left: 50%;
-      width: 1.5px;
-      background: rgba(56, 189, 248, 0.25);
-      pointer-events: none;
+    .jaw-arch-title {
+      text-align: center;
+      font-size: 0.85rem;
+      font-weight: 900;
+      color: var(--accent-blue);
+      letter-spacing: 1px;
+      margin-bottom: 8px;
     }
-    .arch-container { display: flex; justify-content: center; gap: 3px; position: relative; margin: 18px 0; }
-    @media (min-width: 600px) { .arch-container { gap: 5px; } }
+    
+    /* تقويس القوس السني كالفك الحقيقي */
+    .dental-arch-3d {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 3px;
+      position: relative;
+      margin: 16px 0;
+      padding: 0 10px;
+    }
+    @media (min-width: 650px) { .dental-arch-3d { gap: 6px; } }
 
-    /* مجسم السن التشريحي المتحرك */
-    .tooth-anatomical {
-      width: 25px;
+    /* مجسم السن 3D */
+    .tooth-3d {
+      width: 26px;
       height: 78px;
       display: flex;
       flex-direction: column;
@@ -186,52 +213,52 @@
       position: relative;
       user-select: none;
       transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      filter: drop-shadow(0 6px 10px rgba(0,0,0,0.7));
     }
-    @media (min-width: 768px) { .tooth-anatomical { width: 35px; height: 100px; } }
+    @media (min-width: 768px) { .tooth-3d { width: 36px; height: 98px; } }
 
-    .tooth-anatomical:hover {
+    .tooth-3d:hover {
       transform: translateY(-8px) scale(1.18);
       z-index: 25;
-      filter: drop-shadow(0 8px 15px rgba(56, 189, 248, 0.6));
+      filter: drop-shadow(0 10px 18px rgba(56, 189, 248, 0.7));
     }
-    .tooth-anatomical.active-selected {
-      transform: translateY(-10px) scale(1.22);
+    .tooth-3d.active-selected {
+      transform: translateY(-10px) scale(1.24);
       z-index: 30;
-      animation: toothPulse 1.6s infinite alternate;
+      animation: toothGlow 1.5s infinite alternate;
     }
-    @keyframes toothPulse {
-      0% { filter: drop-shadow(0 0 8px #00b48a); }
-      100% { filter: drop-shadow(0 0 20px #38bdf8); }
+    @keyframes toothGlow {
+      0% { filter: drop-shadow(0 0 10px #00b48a); }
+      100% { filter: drop-shadow(0 0 24px #38bdf8); }
     }
 
-    .tooth-num-badge { font-size: 0.62rem; font-weight: 900; color: #64748b; margin-top: 3px; transition: color 0.2s; }
-    .tooth-anatomical:hover .tooth-num-badge { color: var(--accent-blue); }
+    .tooth-number { font-size: 0.65rem; font-weight: 900; color: #64748b; margin-top: 3px; transition: color 0.2s; }
+    .tooth-3d:hover .tooth-number { color: var(--accent-blue); }
 
-    /* مسارات تلوين الجذور والتيجان */
-    .root-path { transition: fill 0.3s ease; }
-    .crown-path { transition: fill 0.3s ease; }
+    /* تلوين الحالات 3D */
+    .root-3d { transition: fill 0.3s ease; }
+    .crown-3d { transition: fill 0.3s ease; }
 
-    .tooth-anatomical.has-endo .root-path { fill: #ef4444 !important; }
-    .tooth-anatomical.has-filling .crown-path { fill: #38bdf8 !important; }
-    .tooth-anatomical.has-crown .crown-path { fill: #f59e0b !important; }
-    .tooth-anatomical.has-extract { opacity: 0.3; filter: grayscale(1); }
-    .tooth-anatomical.has-extract::after {
+    .tooth-3d.is-endo .root-3d { fill: url(#redGlowGrad) !important; }
+    .tooth-3d.is-filling .crown-3d { fill: url(#blueGlowGrad) !important; }
+    .tooth-3d.is-crown .crown-3d { fill: url(#goldGlowGrad) !important; }
+    .tooth-3d.is-extract { opacity: 0.3; filter: grayscale(1); }
+    .tooth-3d.is-extract::after {
       content: "✕";
       position: absolute;
       top: 40%;
       left: 50%;
       transform: translate(-50%, -50%);
       color: #ef4444;
-      font-size: 1.7rem;
+      font-size: 1.8rem;
       font-weight: 900;
-      animation: popIn 0.3s ease forwards;
     }
 
-    /* بالون الملاحظة الطافي Bubble Note المتحرك */
-    .bubble-note-tag {
+    /* بالون الملاحظة السريرية Bubble Note */
+    .bubble-tag-3d {
       position: absolute;
       background: linear-gradient(135deg, #f59e0b, #d97706);
-      color: #050d18;
+      color: #030811;
       font-size: 0.65rem;
       font-weight: 900;
       padding: 3px 8px;
@@ -240,24 +267,24 @@
       box-shadow: 0 4px 12px rgba(0,0,0,0.6);
       pointer-events: none;
       z-index: 35;
-      animation: popIn 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+      animation: popIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
     }
-    .bubble-note-tag.up { top: -26px; }
-    .bubble-note-tag.down { bottom: -26px; }
-    .bubble-note-tag.up::after { content:''; position:absolute; top:100%; left:50%; transform:translateX(-50%); border:4px solid transparent; border-top-color:#d97706; }
-    .bubble-note-tag.down::after { content:''; position:absolute; bottom:100%; left:50%; transform:translateX(-50%); border:4px solid transparent; border-bottom-color:#f59e0b; }
+    .bubble-tag-3d.up { top: -26px; }
+    .bubble-tag-3d.down { bottom: -26px; }
+    .bubble-tag-3d.up::after { content:''; position:absolute; top:100%; left:50%; transform:translateX(-50%); border:4px solid transparent; border-top-color:#d97706; }
+    .bubble-tag-3d.down::after { content:''; position:absolute; bottom:100%; left:50%; transform:translateX(-50%); border:4px solid transparent; border-bottom-color:#f59e0b; }
 
     @keyframes popIn {
       0% { opacity: 0; transform: scale(0.3); }
       100% { opacity: 1; transform: scale(1); }
     }
 
-    /* شريط أدوات الألوان */
+    /* شريط الألوان السريعة */
     .color-swatch-bar {
       display: flex;
       justify-content: center;
       gap: 14px;
-      background: rgba(18, 32, 51, 0.9);
+      background: rgba(14, 27, 43, 0.95);
       backdrop-filter: blur(10px);
       padding: 8px 20px;
       border-radius: 30px;
@@ -274,13 +301,13 @@
       border: 2px solid transparent;
       transition: all 0.2s;
     }
-    .color-dot:hover { transform: scale(1.25); border-color: white; box-shadow: 0 0 10px rgba(255,255,255,0.5); }
+    .color-dot:hover { transform: scale(1.25); border-color: white; }
 
     /* النوافذ العائمة */
     .modal-overlay {
       position: fixed;
       inset: 0;
-      background: rgba(4, 9, 17, 0.82);
+      background: rgba(3, 8, 17, 0.85);
       backdrop-filter: blur(6px);
       display: none;
       align-items: center;
@@ -293,14 +320,13 @@
       border: 1px solid var(--card-border);
       border-radius: 18px;
       width: 100%;
-      max-width: 480px;
+      max-width: 500px;
       max-height: 90vh;
       overflow-y: auto;
-      box-shadow: 0 25px 50px rgba(0,0,0,0.6);
-      animation: popIn 0.25s ease;
+      box-shadow: 0 25px 50px rgba(0,0,0,0.7);
     }
     .modal-head {
-      background: #09131f;
+      background: #07121f;
       padding: 14px 18px;
       display: flex;
       justify-content: space-between;
@@ -310,110 +336,157 @@
     }
     .modal-body { padding: 18px; display: flex; flex-direction: column; gap: 14px; }
 
-    /* الطباعة A4 */
+    /* ================= ورقة الطباعة الشاملة A4 ================= */
+    #printableMasterSheet {
+      display: none;
+      background: white !important;
+      color: #0f172a !important;
+      padding: 28px;
+    }
+
     @media print {
       body * { visibility: hidden; }
-      #printableArea, #printableArea * { visibility: visible; }
-      #printableArea { position: fixed; left: 0; top: 0; width: 100%; background: white !important; color: black !important; padding: 30px; }
+      #printableMasterSheet, #printableMasterSheet * { visibility: visible; }
+      #printableMasterSheet {
+        display: block !important;
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 100%;
+        background: white !important;
+        color: #0f172a !important;
+        box-shadow: none !important;
+        margin: 0;
+        padding: 24px;
+      }
     }
   </style>
 </head>
 <body>
 
+  <!-- تدرجات SVG ثلاثية الأبعاد المشتركة للأسنان -->
+  <svg style="position: absolute; width: 0; height: 0;" aria-hidden="true">
+    <defs>
+      <!-- تدرج السن السليم 3D -->
+      <linearGradient id="toothNormalGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#ffffff"/>
+        <stop offset="60%" stop-color="#f1f5f9"/>
+        <stop offset="100%" stop-color="#cbd5e1"/>
+      </linearGradient>
+      <!-- تدرج الجذر العظمي 3D -->
+      <linearGradient id="rootNormalGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#e2e8f0"/>
+        <stop offset="70%" stop-color="#cbd5e1"/>
+        <stop offset="100%" stop-color="#94a3b8"/>
+      </linearGradient>
+      <!-- تدرج العصب / الجذر الأحمر -->
+      <linearGradient id="redGlowGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#f87171"/>
+        <stop offset="100%" stop-color="#dc2626"/>
+      </linearGradient>
+      <!-- تدرج الحشوة الزرقاء -->
+      <linearGradient id="blueGlowGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#38bdf8"/>
+        <stop offset="100%" stop-color="#0284c7"/>
+      </linearGradient>
+      <!-- تدرج التاج / التلبيس الذهبي -->
+      <linearGradient id="goldGlowGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#fbbf24"/>
+        <stop offset="100%" stop-color="#d97706"/>
+      </linearGradient>
+    </defs>
+  </svg>
+
   <!-- القائمة الجانبية -->
   <aside>
-    <div class="brand-box">
+    <div class="brand-logo">
       <svg viewBox="0 0 24 24"><path d="M18.6 6.62c-1.44-3.82-4.9-4.62-6.6-4.62s-5.16.8-6.6 4.62c-1.57 4.18-.76 8.59.31 12.08.38 1.25 1.13 2.3 2.19 3.03.74.52 1.63.78 2.54.74.88-.04 1.56-.7 1.56-1.58v-4.89h0c0-.55.45-1 1-1s1 .45 1 1v4.89c0 .88.68 1.54 1.56 1.58.91.04 1.8-.22 2.54-.74 1.06-.73 1.81-1.78 2.19-3.03 1.07-3.49 1.88-7.9.31-12.08z"/></svg>
-      <span class="brand-sub">د. عمر</span>
+      <span class="brand-text">د. عمر</span>
     </div>
 
-    <button class="nav-btn active" onclick="navigate('tabPatients', this)">
+    <button class="nav-btn active" onclick="switchView('tabPatients', this)">
       <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
       <span>المراجعين</span>
     </button>
 
-    <button class="nav-btn" onclick="navigate('tabTeeth', this)">
+    <button class="nav-btn" onclick="switchView('tabJaws', this)">
       <svg viewBox="0 0 24 24"><path d="M18.6 6.62c-1.44-3.82-4.9-4.62-6.6-4.62s-5.16.8-6.6 4.62c-1.57 4.18-.76 8.59.31 12.08.38 1.25 1.13 2.3 2.19 3.03.74.52 1.63.78 2.54.74.88-.04 1.56-.7 1.56-1.58v-4.89h0c0-.55.45-1 1-1s1 .45 1 1v4.89c0 .88.68 1.54 1.56 1.58.91.04 1.8-.22 2.54-.74 1.06-.73 1.81-1.78 2.19-3.03 1.07-3.49 1.88-7.9.31-12.08z"/></svg>
-      <span>الأسنان</span>
+      <span>الفكين 3D</span>
     </button>
 
-    <button class="nav-btn" onclick="navigate('tabAppointments', this)">
+    <button class="nav-btn" onclick="switchView('tabAppointments', this)">
       <svg viewBox="0 0 24 24"><path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V10h14v10zm0-12H5V6h14v2z"/></svg>
       <span>المواعيد</span>
     </button>
 
-    <button class="nav-btn" onclick="navigate('tabFinance', this)">
+    <button class="nav-btn" onclick="switchView('tabFinance', this)">
       <svg viewBox="0 0 24 24"><path d="M21 18v1c0 1.1-.9 2-2 2H5c-1.11 0-2-.9-2-2V5c0-1.1.89-2 2-2h14c1.1 0 2 .9 2 2v1h-9c-1.11 0-2 .9-2 2v8c0 1.1.89 2 2 2h9zm-9-2h10V8H12v8zm4-2.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg>
       <span>الدفعات</span>
     </button>
 
-    <button class="nav-btn" onclick="navigate('tabWhatsapp', this)">
+    <button class="nav-btn" onclick="switchView('tabWhatsapp', this)">
       <svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
       <span>التواصل</span>
     </button>
-
-    <button class="nav-btn" onclick="navigate('tabAudit', this)">
-      <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 14h-2v-2h2v2zm0-4h-2V7h2v5z"/></svg>
-      <span>التحركات</span>
-    </button>
   </aside>
 
-  <!-- جسم التطبيق -->
-  <div class="app-body">
+  <!-- جسم التطبيق الرئيسي -->
+  <div class="app-main">
     
     <!-- الشريط العلوي -->
     <header class="top-header">
-      <div class="clinic-info">
+      <div class="clinic-title">
         <h1>
           <span>عيادة الدكتور عمر الحمداني</span>
-          <span class="clinic-badge">جراحة وطب الأسنان</span>
+          <span class="clinic-badge">جراحة وطب وتجميل الأسنان</span>
         </h1>
       </div>
 
       <div class="header-ctrls">
-        <button class="btn-ui" onclick="speakDailySchedule()">🔊 قراءة المواعيد الذكية</button>
-        <button class="btn-ui btn-emerald" onclick="openModal('newPatientModal')">➕ مراجع جديد</button>
+        <button class="btn-action" onclick="speakDailySchedule()">🔊 قراءة المواعيد الذكية</button>
+        <button class="btn-action btn-emerald" onclick="openModal('newPatientModal')">➕ مراجع جديد</button>
       </div>
     </header>
 
-    <div class="main-view">
+    <div class="content-viewport">
 
       <!-- ================= 1. سجل المراجعين ================= -->
       <section id="tabPatients" class="page-tab active">
         <div style="display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px;">
-          <input type="text" id="patientSearchBox" oninput="filterPatientsList()" placeholder="🔍 ابحث بالاسم أو رقم الهاتف..." class="input-ui" style="flex:1; max-width:320px;">
-          <div style="display:flex; gap:8px;">
-            <button class="btn-ui" onclick="exportPatientsCsv()">📊 تصدير Excel</button>
-            <button class="btn-ui" onclick="exportPatientsWord()">📝 تصدير Word</button>
-          </div>
+          <input type="text" id="patientSearchBox" oninput="filterPatientsList()" placeholder="🔍 ابحث بالاسم أو رقم الهاتف..." class="input-box" style="flex:1; max-width:320px;">
+          <button class="btn-action" onclick="exportPatientsCsv()">📊 تصدير Excel</button>
         </div>
-        <div class="grid-cards" id="patientsContainer"></div>
+        <div class="patients-grid" id="patientsContainer"></div>
       </section>
 
-      <!-- ================= 2. خطة العلاج ومخطط الأسنان التشريحي المتحرك ================= -->
-      <section id="tabTeeth" class="page-tab">
+      <!-- ================= 2. المخطط السريري للفكين 3D ================= -->
+      <section id="tabJaws" class="page-tab">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; flex-wrap:wrap; gap:10px;">
           <div>
-            <h3 style="font-size:1.1rem; font-weight:900; color:var(--accent-blue);">المخطط السريري التفاعلي للأسنان</h3>
-            <p style="font-size:0.75rem; color:var(--text-dim);">المراجع الحالي: <strong id="chartPatientTitle" style="color:white;">--</strong></p>
+            <h3 style="font-size:1.1rem; font-weight:900; color:var(--accent-blue);">المخطط التشريحي للفكين (3D Dental Arches)</h3>
+            <p style="font-size:0.75rem; color:var(--text-dim);">المراجع المحدد: <strong id="chartPatientTitle" style="color:white;">--</strong></p>
           </div>
-          <button class="btn-ui" style="background:#f59e0b; color:#06101c; border:none;" onclick="printTreatmentSheet()">🖨️ طباعة الخطة السريرية (A4)</button>
+          <button class="btn-action btn-emerald" onclick="printMasterReportForCurrent()">🖨️ طباعة التقرير الشامل والروشتة (A4)</button>
         </div>
 
-        <div class="dental-workspace" id="dentalChartBox">
-          <div class="chart-midline"></div>
-          <div style="display:flex; justify-content:space-between; color:var(--accent-blue); font-weight:900; font-size:0.8rem; padding:0 12px;">
-            <span>اليمين (Right)</span>
-            <span>اليسار (Left)</span>
+        <div class="jaw-3d-wrapper" id="dentalChartBox">
+          <div style="display:flex; justify-content:space-between; color:var(--accent-blue); font-weight:900; font-size:0.8rem; padding:0 14px;">
+            <span>اليمين (Right Side)</span>
+            <span>اليسار (Left Side)</span>
           </div>
 
-          <div class="arch-container" id="upperArch"></div>
-          <div class="arch-container" id="lowerArch"></div>
+          <!-- الفك العلوي -->
+          <div class="jaw-arch-title">الفك العلوي (Upper Jaw Arch)</div>
+          <div class="dental-arch-3d" id="upperArch"></div>
+
+          <!-- الفك السفلي -->
+          <div class="dental-arch-3d" id="lowerArch" style="margin-top:24px;"></div>
+          <div class="jaw-arch-title" style="margin-top:8px;">الفك السفلي (Lower Jaw Arch)</div>
 
           <div class="color-swatch-bar">
             <div class="color-dot" style="background:#ffffff;" title="سليم" onclick="setChartColor('normal')"></div>
             <div class="color-dot" style="background:#38bdf8;" title="حشوة بيضاء" onclick="setChartColor('filling')"></div>
-            <div class="color-dot" style="background:#ef4444;" title="حشوة جذر / عصب" onclick="setChartColor('endo')"></div>
+            <div class="color-dot" style="background:#ef4444;" title="حشوة عصب / جذر" onclick="setChartColor('endo')"></div>
             <div class="color-dot" style="background:#f59e0b;" title="تغليف / تاج" onclick="setChartColor('crown')"></div>
             <div class="color-dot" style="background:#64748b;" title="قلع سن" onclick="setChartColor('extract')"></div>
           </div>
@@ -423,8 +496,8 @@
       <!-- ================= 3. جدول المواعيد ================= -->
       <section id="tabAppointments" class="page-tab">
         <div style="display:flex; justify-content:space-between; gap:10px; margin-bottom:14px; flex-wrap:wrap;">
-          <input type="date" id="appointmentDateFilter" onchange="renderAppointments()" class="input-ui">
-          <button class="btn-ui btn-emerald" onclick="openNewAppModal()">➕ حجز موعد جديد</button>
+          <input type="date" id="appointmentDateFilter" onchange="renderAppointments()" class="input-box">
+          <button class="btn-action btn-emerald" onclick="openNewAppModal()">➕ حجز موعد مراجع</button>
         </div>
         <div id="appointmentsList" style="display:flex; flex-direction:column; gap:8px;"></div>
       </section>
@@ -433,51 +506,40 @@
       <section id="tabFinance" class="page-tab">
         <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(180px, 1fr)); gap:12px; margin-bottom:16px;">
           <div style="background:var(--card-bg); padding:14px; border-radius:12px; border-right:4px solid var(--primary);">
-            <div style="font-size:0.75rem; color:var(--text-dim);">مقبوضات اليوم (كاش 💵):</div>
+            <div style="font-size:0.75rem; color:var(--text-dim);">مقبوضات كاش (💵):</div>
             <h3 id="statCash" style="color:var(--primary); font-size:1.4rem;">0 د.ع</h3>
           </div>
           <div style="background:var(--card-bg); padding:14px; border-radius:12px; border-right:4px solid var(--accent-blue);">
-            <div style="font-size:0.75rem; color:var(--text-dim);">مقبوضات اليوم (بطاقة 💳):</div>
+            <div style="font-size:0.75rem; color:var(--text-dim);">مقبوضات بطاقة (💳):</div>
             <h3 id="statCard" style="color:var(--accent-blue); font-size:1.4rem;">0 د.ع</h3>
           </div>
           <div style="background:var(--card-bg); padding:14px; border-radius:12px; border-right:4px solid var(--accent-red);">
-            <div style="font-size:0.75rem; color:var(--text-dim);">إجمالي الديون المتبقية:</div>
+            <div style="font-size:0.75rem; color:var(--text-dim);">الديون المتبقية:</div>
             <h3 id="statDebt" style="color:var(--accent-red); font-size:1.4rem;">0 د.ع</h3>
           </div>
         </div>
         <div id="financeList" style="display:flex; flex-direction:column; gap:8px;"></div>
       </section>
 
-      <!-- ================= 5. التواصل وواتساب ================= -->
+      <!-- ================= 5. التواصل عبر واتساب ================= -->
       <section id="tabWhatsapp" class="page-tab">
-        <div style="display:flex; gap:8px; margin-bottom:14px; overflow-x:auto;">
-          <button class="btn-ui btn-emerald" onclick="filterWhatsapp('all', this)">كل المراجعين</button>
-          <button class="btn-ui" onclick="filterWhatsapp('ongoing', this)">حالات مستمرة</button>
-          <button class="btn-ui" onclick="filterWhatsapp('debt', this)">عليهم ديون</button>
-        </div>
         <div id="whatsappList" style="display:flex; flex-direction:column; gap:8px;"></div>
-      </section>
-
-      <!-- ================= 6. مراقبة التحركات ================= -->
-      <section id="tabAudit" class="page-tab">
-        <h3 style="margin-bottom:12px; font-size:1rem; color:var(--accent-blue);">سجل مراقبة تحركات النظام (Audit Log)</h3>
-        <div id="auditList" style="display:flex; flex-direction:column; gap:8px;"></div>
       </section>
 
     </div>
   </div>
 
-  <!-- ================= نافذة تعديل السن والبالون الطافي ================= -->
+  <!-- ================= نافذة تعديل السن ================= -->
   <div class="modal-overlay" id="toothActionModal">
     <div class="modal-card">
       <div class="modal-head">
-        <span>إجراء سريري للسن رقم: <strong id="lblToothNum" style="color:var(--accent-blue);"></strong></span>
+        <span>إجراء للسن رقم: <strong id="lblToothNum" style="color:var(--accent-blue);"></strong></span>
         <button style="background:none; border:none; color:white; font-size:1.5rem; cursor:pointer;" onclick="closeModal('toothActionModal')">&times;</button>
       </div>
       <div class="modal-body">
         <div>
           <label style="font-size:0.8rem; font-weight:bold;">نوع الإجراء الطبي:</label>
-          <select id="toothOpSelect" class="input-ui" style="width:100%; margin-top:4px;">
+          <select id="toothOpSelect" class="input-box" style="width:100%; margin-top:4px;">
             <option value="حشوة بيضاء">حشوة بيضاء (Composite)</option>
             <option value="حشوة جذر">حشوة جذر / سحب عصب (Endo)</option>
             <option value="قلع سن">قلع سن (Extraction)</option>
@@ -489,9 +551,9 @@
         </div>
         <div>
           <label style="font-size:0.8rem; font-weight:bold;">نص بالون الملاحظة السريرية (Bubble Note):</label>
-          <input type="text" id="toothBubbleInput" placeholder="مثال: حشوة جذر، قلع سن العقل..." class="input-ui" style="width:100%; margin-top:4px;">
+          <input type="text" id="toothBubbleInput" placeholder="مثال: حشوة جذر، قلع سن العقل..." class="input-box" style="width:100%; margin-top:4px;">
         </div>
-        <button class="btn-ui btn-emerald" style="width:100%; justify-content:center;" onclick="applyToothChanges()">تثبيت في خطة العلاج</button>
+        <button class="btn-action btn-emerald" style="width:100%; justify-content:center;" onclick="applyToothChanges()">تثبيت الإجراء على الفك</button>
       </div>
     </div>
   </div>
@@ -500,18 +562,18 @@
   <div class="modal-overlay" id="newPatientModal">
     <div class="modal-card">
       <div class="modal-head">
-        <span>إضافة مراجع جديد</span>
+        <span>إضافة مراجع جديد للعيادة</span>
         <button style="background:none; border:none; color:white; font-size:1.5rem; cursor:pointer;" onclick="closeModal('newPatientModal')">&times;</button>
       </div>
       <form onsubmit="handleSavePatient(event)" class="modal-body">
-        <input type="text" id="newPtName" required placeholder="اسم المراجع الكامل" class="input-ui">
+        <input type="text" id="newPtName" required placeholder="اسم المراجع الكامل" class="input-box">
         <div style="display:flex; gap:8px;">
-          <input type="number" id="newPtAge" required placeholder="العمر" class="input-ui" style="flex:1;">
-          <input type="tel" id="newPtPhone" required placeholder="رقم الهاتف" class="input-ui" style="flex:1;">
+          <input type="number" id="newPtAge" required placeholder="العمر" class="input-box" style="flex:1;">
+          <input type="tel" id="newPtPhone" required placeholder="رقم الهاتف" class="input-box" style="flex:1;">
         </div>
-        <input type="text" id="newPtAddress" placeholder="السكن / العنوان" class="input-ui">
-        <input type="text" id="newPtHealth" placeholder="الحالة الصحية وتنبيه الحساسية (بنسلين، ضغط، سكر...)" class="input-ui" style="border-color:#ef4444;">
-        <button type="submit" class="btn-ui btn-emerald" style="justify-content:center;">حفظ المراجع</button>
+        <input type="text" id="newPtAddress" placeholder="السكن / المنطقة" class="input-box">
+        <input type="text" id="newPtHealth" placeholder="الحالة الصحية وتنبيه الحساسية (ضغط، سكر، بنسلين...)" class="input-box" style="border-color:#ef4444;">
+        <button type="submit" class="btn-action btn-emerald" style="justify-content:center;">حفظ بيانات المراجع</button>
       </form>
     </div>
   </div>
@@ -520,70 +582,141 @@
   <div class="modal-overlay" id="newAppModal">
     <div class="modal-card">
       <div class="modal-head">
-        <span>حجز موعد مراجع</span>
+        <span>تحديد موعد حجز للمراجع</span>
         <button style="background:none; border:none; color:white; font-size:1.5rem; cursor:pointer;" onclick="closeModal('newAppModal')">&times;</button>
       </div>
       <form onsubmit="handleSaveApp(event)" class="modal-body">
-        <select id="selAppPatient" required class="input-ui"></select>
+        <select id="selAppPatient" required class="input-box"></select>
         <div style="display:flex; gap:8px;">
-          <input type="date" id="inpAppDate" required class="input-ui" style="flex:1;">
-          <input type="time" id="inpAppTime" required class="input-ui" style="flex:1;">
+          <input type="date" id="inpAppDate" required class="input-box" style="flex:1;">
+          <input type="time" id="inpAppTime" required class="input-box" style="flex:1;">
         </div>
-        <input type="text" id="inpAppProc" placeholder="نوع الإجراء السريري (كشف / جلسة عصب / حشوة...)" class="input-ui">
-        <button type="submit" class="btn-ui btn-emerald" style="justify-content:center;">تأكيد وحجز الموعد</button>
+        <input type="text" id="inpAppProc" placeholder="نوع الإجراء السريري (كشف / جلسة عصب / حشوة...)" class="input-box">
+        <button type="submit" class="btn-action btn-emerald" style="justify-content:center;">تأكيد وحفظ الموعد</button>
       </form>
     </div>
   </div>
 
-  <!-- حاوية الطباعة A4 -->
-  <div id="printableArea" style="display:none;">
-    <div style="display:flex; justify-content:space-between; border-bottom:2px solid #00b48a; padding-bottom:12px; margin-bottom:16px;">
-      <div>
-        <h1 style="font-size:1.4rem; color:#00b48a;">عيادة الدكتور عمر الحمداني</h1>
-        <p style="font-size:0.85rem; color:#555;">طب وجراحة الفم وتجميل الأسنان</p>
+  <!-- ================= نافذة كتابة الأدوية وإرفاق الأشعة ================= -->
+  <div class="modal-overlay" id="medsModal">
+    <div class="modal-card">
+      <div class="modal-head">
+        <span>إدارة الأدوية والأشعة: <strong id="lblMedPatient" style="color:var(--accent-blue);"></strong></span>
+        <button style="background:none; border:none; color:white; font-size:1.5rem; cursor:pointer;" onclick="closeModal('medsModal')">&times;</button>
       </div>
-      <div style="text-align:left; font-size:0.8rem;">
-        <p>التاريخ: <span id="printDateSpan"></span></p>
-        <p>المراجع: <strong id="printPtNameSpan">--</strong></p>
+      <div class="modal-body">
+        <div style="border-bottom:1px solid var(--card-border); padding-bottom:10px;">
+          <h4 style="font-size:0.85rem; margin-bottom:6px; color:var(--primary);">➕ إضافة دواء للروشتة (℞):</h4>
+          <div style="display:flex; gap:6px;">
+            <input type="text" id="inpMedName" placeholder="اسم الدواء (مثل: Amoxicillin 500mg)" class="input-box" style="flex:1;">
+            <input type="text" id="inpMedDose" placeholder="الجرعة (حبة كل 8 ساعات)" class="input-box" style="flex:1;">
+            <button class="btn-action btn-emerald" onclick="addMedication()">إضافة</button>
+          </div>
+          <div id="patientMedsList" style="margin-top:8px; font-size:0.8rem; display:flex; flex-direction:column; gap:4px;"></div>
+        </div>
+
+        <div>
+          <h4 style="font-size:0.85rem; margin-bottom:6px; color:var(--accent-blue);">📷 إرفاق صورة الأشعة:</h4>
+          <input type="file" id="inpXrayFile" accept="image/*" class="input-box" onchange="handleXrayUpload(event)">
+          <div id="patientXrayPreview" style="margin-top:8px;"></div>
+        </div>
+
+        <button class="btn-action btn-emerald" style="justify-content:center;" onclick="printMasterReportForCurrent()">🖨️ طباعة التقرير الشامل الآن</button>
       </div>
     </div>
-    <div id="printTarget"></div>
+  </div>
+
+  <!-- ================= ورقة الطباعة الشاملة والروشتة A4 الموحدة ================= -->
+  <div id="printableMasterSheet">
+    <!-- الترويسة الرسمية للعيادة -->
+    <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:3px solid #00b48a; padding-bottom:14px; margin-bottom:16px;">
+      <div>
+        <h1 style="font-size:1.5rem; font-weight:900; color:#008f6f; margin-bottom:2px;">عيادة الدكتور عمر الحمداني</h1>
+        <p style="font-size:0.85rem; color:#475569; font-weight:bold;">طب وجراحة الفم وتجميل الأسنان | Dental & Oral Surgery Clinic</p>
+      </div>
+      <div style="text-align:left; font-size:0.8rem; color:#334155; line-height:1.4;">
+        <p><strong>تاريخ إدخال البيانات:</strong> <span id="prtEntryDate">--</span></p>
+        <p><strong>تاريخ موعد الحجز:</strong> <span id="prtAppDate">--</span></p>
+      </div>
+    </div>
+
+    <!-- بطاقة معلومات المراجع -->
+    <div style="background:#f8fafc; border:1px solid #cbd5e1; border-radius:10px; padding:12px 16px; margin-bottom:16px; display:grid; grid-template-columns:repeat(3, 1fr); gap:10px; font-size:0.85rem;">
+      <div><strong>اسم المراجع:</strong> <span id="prtName">--</span></div>
+      <div><strong>العمر:</strong> <span id="prtAge">--</span></div>
+      <div><strong>رقم الهاتف:</strong> <span id="prtPhone">--</span></div>
+      <div><strong>السكن / العنوان:</strong> <span id="prtAddress">--</span></div>
+      <div style="grid-column:span 2; color:#b91c1c;"><strong>الحالة الصحية والتنبيهات:</strong> <span id="prtHealth">سليم</span></div>
+    </div>
+
+    <!-- صورة الفكين 3D مع الإجراءات -->
+    <div style="border:1px solid #cbd5e1; border-radius:12px; padding:14px; margin-bottom:16px; text-align:center;">
+      <h3 style="font-size:0.95rem; color:#0f766e; margin-bottom:8px;">مخطط الفكين والإجراءات السريرية المنجزة (3D Dental Chart)</h3>
+      <div id="prtJawClone" style="max-height:260px; overflow:hidden;"></div>
+    </div>
+
+    <!-- تفاصيل الأسنان المعالجة والروشتة والأشعة -->
+    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:14px; margin-bottom:16px;">
+      <!-- جدول المعالجات -->
+      <div style="border:1px solid #cbd5e1; border-radius:10px; padding:12px;">
+        <h4 style="font-size:0.85rem; color:#0f766e; margin-bottom:6px; border-bottom:1px solid #e2e8f0; padding-bottom:4px;">سجل إجراءات الأسنان:</h4>
+        <div id="prtTeethList" style="font-size:0.8rem; display:flex; flex-direction:column; gap:4px;"></div>
+      </div>
+
+      <!-- الوصفة الطبية (Rx) والأشعة -->
+      <div style="border:1px solid #cbd5e1; border-radius:10px; padding:12px;">
+        <h4 style="font-size:0.95rem; font-family:serif; font-weight:900; color:#0f766e; margin-bottom:6px; border-bottom:1px solid #e2e8f0; padding-bottom:4px;">الوصفة الطبية (℞):</h4>
+        <div id="prtMedsList" style="font-size:0.8rem; display:flex; flex-direction:column; gap:4px; min-height:60px;"></div>
+
+        <!-- صورة الأشعة إن وجدت -->
+        <div id="prtXrayBox" style="margin-top:10px; border-top:1px dashed #cbd5e1; padding-top:6px; display:none;">
+          <strong style="font-size:0.75rem; color:#475569; display:block; margin-bottom:4px;">صورة الأشعة المرفقة:</strong>
+          <img id="prtXrayImg" src="" style="max-height:90px; border-radius:6px; border:1px solid #cbd5e1;">
+        </div>
+      </div>
+    </div>
+
+    <!-- التذييل والتوقيع -->
+    <div style="display:flex; justify-content:space-between; align-items:center; border-top:1px solid #cbd5e1; padding-top:14px; font-size:0.85rem; margin-top:20px;">
+      <div><strong>توقيع الدكتور عمر الحمداني:</strong> ________________________</div>
+      <div><strong>ختم العيادة:</strong> ________________________</div>
+    </div>
   </div>
 
   <!-- ================= المنطق البرمجي ================= -->
   <script>
-    // رسم السن التشريحي الحقيقي SVG مع التاج والجذر
-    function renderToothSvg(toothNum, isUpper) {
+    // رسم السن التشريحي 3D مع تدرجات العاج والجذور
+    function renderToothSvg3D(toothNum, isUpper) {
       const isMolar = [18,17,16,26,27,28,48,47,46,36,37,38].includes(Number(toothNum));
       if (isUpper) {
         if (isMolar) {
           return `
             <svg viewBox="0 0 50 100" style="width:100%; height:100%;">
-              <path class="root-path" d="M12,45 C8,25 6,10 10,2 C13,10 18,25 20,45 Z" fill="#cbd5e1" stroke="#334155" stroke-width="1.5"/>
-              <path class="root-path" d="M22,45 C24,20 25,5 26,1 C28,5 29,20 30,45 Z" fill="#94a3b8" stroke="#334155" stroke-width="1.5"/>
-              <path class="root-path" d="M32,45 C35,25 40,10 42,2 C45,10 44,25 38,45 Z" fill="#cbd5e1" stroke="#334155" stroke-width="1.5"/>
-              <path class="crown-path" d="M6,45 C4,65 5,85 15,92 C25,95 30,95 38,92 C46,85 47,65 44,45 Z" fill="#ffffff" stroke="#1e293b" stroke-width="2"/>
+              <path class="root-3d" d="M12,45 C8,25 6,10 10,2 C13,10 18,25 20,45 Z" fill="url(#rootNormalGrad)" stroke="#475569" stroke-width="1.2"/>
+              <path class="root-3d" d="M22,45 C24,20 25,5 26,1 C28,5 29,20 30,45 Z" fill="url(#rootNormalGrad)" stroke="#475569" stroke-width="1.2"/>
+              <path class="root-3d" d="M32,45 C35,25 40,10 42,2 C45,10 44,25 38,45 Z" fill="url(#rootNormalGrad)" stroke="#475569" stroke-width="1.2"/>
+              <path class="crown-3d" d="M6,45 C4,65 5,85 15,92 C25,95 30,95 38,92 C46,85 47,65 44,45 Z" fill="url(#toothNormalGrad)" stroke="#334155" stroke-width="1.5"/>
             </svg>`;
         } else {
           return `
             <svg viewBox="0 0 35 100" style="width:100%; height:100%;">
-              <path class="root-path" d="M10,40 C14,18 16,5 17.5,1 C19,5 21,18 25,40 Z" fill="#cbd5e1" stroke="#334155" stroke-width="1.5"/>
-              <path class="crown-path" d="M5,40 C4,60 7,85 17.5,90 C28,85 31,60 30,40 Z" fill="#ffffff" stroke="#1e293b" stroke-width="2"/>
+              <path class="root-3d" d="M10,40 C14,18 16,5 17.5,1 C19,5 21,18 25,40 Z" fill="url(#rootNormalGrad)" stroke="#475569" stroke-width="1.2"/>
+              <path class="crown-3d" d="M5,40 C4,60 7,85 17.5,90 C28,85 31,60 30,40 Z" fill="url(#toothNormalGrad)" stroke="#334155" stroke-width="1.5"/>
             </svg>`;
         }
       } else {
         if (isMolar) {
           return `
             <svg viewBox="0 0 50 100" style="width:100%; height:100%;">
-              <path class="crown-path" d="M6,55 C4,35 5,15 15,8 C25,5 30,5 38,8 C46,15 47,35 44,55 Z" fill="#ffffff" stroke="#1e293b" stroke-width="2"/>
-              <path class="root-path" d="M12,55 C9,75 8,90 12,98 C15,90 19,75 22,55 Z" fill="#cbd5e1" stroke="#334155" stroke-width="1.5"/>
-              <path class="root-path" d="M28,55 C32,75 35,90 38,98 C42,90 41,75 38,55 Z" fill="#cbd5e1" stroke="#334155" stroke-width="1.5"/>
+              <path class="crown-3d" d="M6,55 C4,35 5,15 15,8 C25,5 30,5 38,8 C46,15 47,35 44,55 Z" fill="url(#toothNormalGrad)" stroke="#334155" stroke-width="1.5"/>
+              <path class="root-3d" d="M12,55 C9,75 8,90 12,98 C15,90 19,75 22,55 Z" fill="url(#rootNormalGrad)" stroke="#475569" stroke-width="1.2"/>
+              <path class="root-3d" d="M28,55 C32,75 35,90 38,98 C42,90 41,75 38,55 Z" fill="url(#rootNormalGrad)" stroke="#475569" stroke-width="1.2"/>
             </svg>`;
         } else {
           return `
             <svg viewBox="0 0 35 100" style="width:100%; height:100%;">
-              <path class="crown-path" d="M5,60 C4,40 7,15 17.5,10 C28,15 31,40 30,60 Z" fill="#ffffff" stroke="#1e293b" stroke-width="2"/>
-              <path class="root-path" d="M10,60 C14,82 16,95 17.5,99 C19,95 21,82 25,60 Z" fill="#cbd5e1" stroke="#334155" stroke-width="1.5"/>
+              <path class="crown-3d" d="M5,60 C4,40 7,15 17.5,10 C28,15 31,40 30,60 Z" fill="url(#toothNormalGrad)" stroke="#334155" stroke-width="1.5"/>
+              <path class="root-3d" d="M10,60 C14,82 16,95 17.5,99 C19,95 21,82 25,60 Z" fill="url(#rootNormalGrad)" stroke="#475569" stroke-width="1.2"/>
             </svg>`;
         }
       }
@@ -591,7 +724,7 @@
 
     // بيانات العيادة
     const AppData = {
-      patients: JSON.parse(localStorage.getItem('omar_clinic_pts') || 'null') || [
+      patients: JSON.parse(localStorage.getItem('dr_omar_data') || 'null') || [
         {
           id: "P_1",
           name: "قاسم حافظ",
@@ -599,72 +732,51 @@
           age: 29,
           address: "الموصل - حي الزهور",
           healthAlert: "حساسية من البنسلين",
-          status: "ongoing",
+          entryDate: "2026-09-20",
+          appointmentDate: "2026-10-02 (05:00 م)",
           debt: 25000,
-          payments: [
-            { id: 1, amount: 60000, type: "cash", date: "2026-09-10" },
-            { id: 2, amount: 45000, type: "card", date: "2026-09-18" }
-          ],
+          payments: [{ id: 1, amount: 60000, type: "cash", date: "2026-09-10" }],
           teeth: {
             16: { status: "endo", note: "حشوة جذر" },
             18: { status: "extract", note: "قلع سن العقل" },
             21: { status: "filling", note: "حشوة بيضاء" }
-          }
-        },
-        {
-          id: "P_2",
-          name: "منى سلمان",
-          phone: "07719876543",
-          age: 26,
-          address: "الموصل - حي النور",
-          healthAlert: "",
-          status: "ongoing",
-          debt: 0,
-          payments: [
-            { id: 3, amount: 50000, type: "cash", date: "2026-09-24" }
+          },
+          meds: [
+            { name: "Amoxicillin 500mg", dose: "كبسولة كل 8 ساعات بعد الأكل" },
+            { name: "Ibuprofen 400mg", dose: "قرص عند اللزوم لتسكين الألم" }
           ],
-          teeth: {
-            36: { status: "crown", note: "تغليف السن" }
-          }
+          xray: ""
         }
       ],
-      appointments: JSON.parse(localStorage.getItem('omar_clinic_apps') || 'null') || [
-        { id: "A_1", patientName: "قاسم حافظ", time: "16:30", date: new Date().toISOString().split('T')[0], proc: "جلسة حشوة عصب سن 16" }
-      ],
-      auditLogs: [
-        { user: "د. عمر الحمداني", action: "تسجيل دخول إلى النظام", time: "04:00 م" }
+      appointments: [
+        { id: "A_1", patientName: "قاسم حافظ", time: "17:00", date: "2026-10-02", proc: "إكمال جلسة العصب للسن 16" }
       ],
       currentPatientId: "P_1",
       activeTooth: null
     };
 
     function persist() {
-      try {
-        localStorage.setItem('omar_clinic_pts', JSON.stringify(AppData.patients));
-        localStorage.setItem('omar_clinic_apps', JSON.stringify(AppData.appointments));
-      } catch(e) {}
+      try { localStorage.setItem('dr_omar_data', JSON.stringify(AppData.patients)); } catch(e) {}
     }
 
-    // التهيئة
     window.addEventListener('DOMContentLoaded', () => {
       document.getElementById('appointmentDateFilter').value = new Date().toISOString().split('T')[0];
-      buildTeethChart();
+      build3DArches();
       renderPatientsCards(AppData.patients);
       renderAppointments();
       renderFinance();
-      renderAudit();
-      bindPatientToChart("P_1");
+      bindPatientToJaw("P_1");
     });
 
-    function navigate(tabId, el) {
+    function switchView(tabId, el) {
       document.querySelectorAll('.page-tab').forEach(p => p.classList.remove('active'));
       document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
       document.getElementById(tabId).classList.add('active');
       if (el) el.classList.add('active');
     }
 
-    // بناء المخطط السريري
-    function buildTeethChart() {
+    // بناء الفكين 3D
+    function build3DArches() {
       const up = document.getElementById('upperArch');
       const low = document.getElementById('lowerArch');
       up.innerHTML = '';
@@ -679,43 +791,43 @@
 
     function createToothNode(num, isUpper) {
       const div = document.createElement('div');
-      div.className = 'tooth-anatomical';
-      div.id = `tooth_${num}`;
+      div.className = 'tooth-3d';
+      div.id = `t3d_${num}`;
       div.innerHTML = `
-        <div class="tooth-num-badge">${num}</div>
-        ${renderToothSvg(num, isUpper)}
+        <div class="tooth-number">${num}</div>
+        ${renderToothSvg3D(num, isUpper)}
       `;
       div.onclick = () => onToothClick(num);
       return div;
     }
 
-    function bindPatientToChart(pId) {
+    function bindPatientToJaw(pId) {
       AppData.currentPatientId = pId;
       const p = AppData.patients.find(x => x.id === pId);
       if (!p) return;
 
       document.getElementById('chartPatientTitle').innerText = `${p.name} (${p.phone})`;
 
-      document.querySelectorAll('.tooth-anatomical').forEach(node => {
-        node.className = 'tooth-anatomical';
-        const tag = node.querySelector('.bubble-note-tag');
+      document.querySelectorAll('.tooth-3d').forEach(node => {
+        node.className = 'tooth-3d';
+        const tag = node.querySelector('.bubble-tag-3d');
         if (tag) tag.remove();
       });
 
       if (p.teeth) {
         Object.keys(p.teeth).forEach(n => {
           const t = p.teeth[n];
-          const node = document.getElementById(`tooth_${n}`);
+          const node = document.getElementById(`t3d_${n}`);
           if (node) {
-            if (t.status === 'endo') node.classList.add('has-endo');
-            if (t.status === 'filling') node.classList.add('has-filling');
-            if (t.status === 'crown') node.classList.add('has-crown');
-            if (t.status === 'extract') node.classList.add('has-extract');
+            if (t.status === 'endo') node.classList.add('is-endo');
+            if (t.status === 'filling') node.classList.add('is-filling');
+            if (t.status === 'crown') node.classList.add('is-crown');
+            if (t.status === 'extract') node.classList.add('is-extract');
 
             if (t.note) {
               const isUp = [18,17,16,15,14,13,12,11,21,22,23,24,25,26,27,28].includes(Number(n));
               const bubble = document.createElement('div');
-              bubble.className = `bubble-note-tag ${isUp ? 'up' : 'down'}`;
+              bubble.className = `bubble-tag-3d ${isUp ? 'up' : 'down'}`;
               bubble.innerText = t.note;
               node.appendChild(bubble);
             }
@@ -725,8 +837,8 @@
     }
 
     function onToothClick(num) {
-      document.querySelectorAll('.tooth-anatomical').forEach(el => el.classList.remove('active-selected'));
-      const activeEl = document.getElementById(`tooth_${num}`);
+      document.querySelectorAll('.tooth-3d').forEach(el => el.classList.remove('active-selected'));
+      const activeEl = document.getElementById(`t3d_${num}`);
       if (activeEl) activeEl.classList.add('active-selected');
 
       AppData.activeTooth = num;
@@ -751,8 +863,7 @@
 
       p.teeth[num] = { status: stat, note: bubble || op };
       persist();
-      addAudit(`تعديل إجراء السن ${num} للمراجع ${p.name}: ${op}`);
-      bindPatientToChart(p.id);
+      bindPatientToJaw(p.id);
       closeModal('toothActionModal');
     }
 
@@ -762,10 +873,10 @@
       if (!p.teeth) p.teeth = {};
       p.teeth[AppData.activeTooth] = { status: type, note: '' };
       persist();
-      bindPatientToChart(p.id);
+      bindPatientToJaw(p.id);
     }
 
-    // عرض المراجعين
+    // بطاقات المراجعين
     function renderPatientsCards(list) {
       const wrap = document.getElementById('patientsContainer');
       wrap.innerHTML = '';
@@ -773,25 +884,31 @@
         const card = document.createElement('div');
         card.className = 'patient-card';
         card.innerHTML = `
-          <div class="pt-header">
-            <div>
-              <div class="pt-name">${p.name}</div>
-              <div class="pt-sub">📞 ${p.phone} | ${p.age} سنة | ${p.address || ''}</div>
+          <div class="pt-top">
+            <div style="display:flex; gap:10px; align-items:center;">
+              <div class="pt-avatar">👤</div>
+              <div class="pt-info">
+                <h3>${p.name}</h3>
+                <p>📞 ${p.phone} | ${p.age} سنة | ${p.address || ''}</p>
+              </div>
             </div>
+            <div class="pt-dates-badge">التسجيل: ${p.entryDate || 'تلقائي'}</div>
           </div>
           ${p.healthAlert ? `<div style="color:#ef4444; font-size:0.75rem; font-weight:bold;">⚠️ تنبيه صحي: ${p.healthAlert}</div>` : ''}
-          <div class="pt-footer">
-            <button class="btn-ui btn-emerald" style="flex:1;" onclick="openPatientChartDirect('${p.id}')">🦷 الأسنان</button>
-            <button class="btn-ui" style="flex:1;" onclick="sendWhatsapp('${p.phone}', '${p.name}')">💬 واتساب</button>
+          <div style="font-size:0.75rem; color:#94a3b8;">📅 موعد الحجز: <strong style="color:#38bdf8;">${p.appointmentDate || 'لم يحدد موعد بعد'}</strong></div>
+          <div class="pt-actions">
+            <button class="btn-pt-action" onclick="openJawForPatient('${p.id}')">🦷 الفكين 3D</button>
+            <button class="btn-pt-action" onclick="openMedsModal('${p.id}')">💊 الأدوية والأشعة</button>
+            <button class="btn-pt-action" style="background:#00b48a; color:#030811; font-weight:900;" onclick="printMasterReport('${p.id}')">🖨️ طباعة شاملة</button>
           </div>
         `;
         wrap.appendChild(card);
       });
     }
 
-    function openPatientChartDirect(pId) {
-      bindPatientToChart(pId);
-      navigate('tabTeeth', document.querySelectorAll('.nav-btn')[1]);
+    function openJawForPatient(pId) {
+      bindPatientToJaw(pId);
+      switchView('tabJaws', document.querySelectorAll('.nav-btn')[1]);
     }
 
     function filterPatientsList() {
@@ -802,6 +919,8 @@
 
     function handleSavePatient(e) {
       e.preventDefault();
+      const now = new Date();
+      const entryDateStr = now.toLocaleDateString('ar-EG');
       const p = {
         id: "P_" + Date.now(),
         name: document.getElementById('newPtName').value,
@@ -809,17 +928,127 @@
         age: document.getElementById('newPtAge').value,
         address: document.getElementById('newPtAddress').value,
         healthAlert: document.getElementById('newPtHealth').value,
-        status: "ongoing",
+        entryDate: entryDateStr,
+        appointmentDate: "قيد التحديد",
         debt: 0,
         payments: [],
-        teeth: {}
+        teeth: {},
+        meds: [],
+        xray: ""
       };
       AppData.patients.unshift(p);
       persist();
-      addAudit(`إضافة مراجع جديد: ${p.name}`);
       renderPatientsCards(AppData.patients);
       closeModal('newPatientModal');
       e.target.reset();
+    }
+
+    // إدارة الأدوية والأشعة
+    function openMedsModal(pId) {
+      AppData.currentPatientId = pId;
+      const p = AppData.patients.find(x => x.id === pId);
+      document.getElementById('lblMedPatient').innerText = p.name;
+      renderPatientMeds(p);
+      openModal('medsModal');
+    }
+
+    function addMedication() {
+      const p = AppData.patients.find(x => x.id === AppData.currentPatientId);
+      const name = document.getElementById('inpMedName').value.trim();
+      const dose = document.getElementById('inpMedDose').value.trim();
+      if (!name) return;
+
+      if (!p.meds) p.meds = [];
+      p.meds.push({ name, dose });
+      persist();
+      renderPatientMeds(p);
+      document.getElementById('inpMedName').value = '';
+      document.getElementById('inpMedDose').value = '';
+    }
+
+    function renderPatientMeds(p) {
+      const wrap = document.getElementById('patientMedsList');
+      wrap.innerHTML = '';
+      if (!p.meds || p.meds.length === 0) {
+        wrap.innerHTML = '<span style="color:#64748b;">لا توجد أدوية مسجلة بعد.</span>';
+        return;
+      }
+      p.meds.forEach((m, i) => {
+        wrap.innerHTML += `<div style="display:flex; justify-content:space-between; background:#07121f; padding:6px 10px; border-radius:6px;"><span>${i+1}. <strong>${m.name}</strong></span><span style="color:#38bdf8;">${m.dose}</span></div>`;
+      });
+    }
+
+    function handleXrayUpload(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(evt) {
+        const p = AppData.patients.find(x => x.id === AppData.currentPatientId);
+        p.xray = evt.target.result;
+        persist();
+        document.getElementById('patientXrayPreview').innerHTML = `<img src="${p.xray}" style="max-height:80px; border-radius:6px;">`;
+      };
+      reader.readAsDataURL(file);
+    }
+
+    // ================= الطباعة الشاملة A4 =================
+    function printMasterReportForCurrent() {
+      printMasterReport(AppData.currentPatientId);
+    }
+
+    function printMasterReport(pId) {
+      const p = AppData.patients.find(x => x.id === pId);
+      if (!p) return;
+
+      document.getElementById('prtEntryDate').innerText = p.entryDate || new Date().toLocaleDateString('ar-EG');
+      document.getElementById('prtAppDate').innerText = p.appointmentDate || 'لا يوجد حجز محدد';
+      document.getElementById('prtName').innerText = p.name;
+      document.getElementById('prtAge').innerText = p.age + " سنة";
+      document.getElementById('prtPhone').innerText = p.phone;
+      document.getElementById('prtAddress').innerText = p.address || 'الموصل';
+      document.getElementById('prtHealth').innerText = p.healthAlert || 'سليم، لا توجد أمراض أو حساسية';
+
+      // استنساخ الفكين للطباعة
+      bindPatientToJaw(p.id);
+      const jawClone = document.getElementById('dentalChartBox').cloneNode(true);
+      const prtTarget = document.getElementById('prtJawClone');
+      prtTarget.innerHTML = '';
+      prtTarget.appendChild(jawClone);
+
+      // سرد إجراءات الأسنان
+      const teethListWrap = document.getElementById('prtTeethList');
+      teethListWrap.innerHTML = '';
+      if (p.teeth && Object.keys(p.teeth).length > 0) {
+        Object.keys(p.teeth).forEach(n => {
+          const t = p.teeth[n];
+          teethListWrap.innerHTML += `<div>• السن رقم <strong>${n}</strong>: ${t.note || t.status}</div>`;
+        });
+      } else {
+        teethListWrap.innerHTML = '<div>• لم تسجل أي معالجات للأسنان بعد.</div>';
+      }
+
+      // سرد الأدوية (℞)
+      const medsListWrap = document.getElementById('prtMedsList');
+      medsListWrap.innerHTML = '';
+      if (p.meds && p.meds.length > 0) {
+        p.meds.forEach((m, idx) => {
+          medsListWrap.innerHTML += `<div><strong>${idx+1}. ${m.name}</strong> - ${m.dose}</div>`;
+        });
+      } else {
+        medsListWrap.innerHTML = '<div>• لا توجد أدوية مقررة.</div>';
+      }
+
+      // الأشعة
+      const xrayBox = document.getElementById('prtXrayBox');
+      const xrayImg = document.getElementById('prtXrayImg');
+      if (p.xray) {
+        xrayBox.style.display = 'block';
+        xrayImg.src = p.xray;
+      } else {
+        xrayBox.style.display = 'none';
+      }
+
+      window.print();
     }
 
     // المواعيد
@@ -865,14 +1094,20 @@
       e.preventDefault();
       const pId = document.getElementById('selAppPatient').value;
       const p = AppData.patients.find(x => x.id === pId);
+      const appDate = document.getElementById('inpAppDate').value;
+      const appTime = document.getElementById('inpAppTime').value;
+
       AppData.appointments.push({
         id: "A_" + Date.now(),
         patientName: p ? p.name : 'مجهول',
-        date: document.getElementById('inpAppDate').value,
-        time: document.getElementById('inpAppTime').value,
+        date: appDate,
+        time: appTime,
         proc: document.getElementById('inpAppProc').value
       });
+
+      if (p) p.appointmentDate = `${appDate} (${appTime})`;
       persist();
+      renderPatientsCards(AppData.patients);
       renderAppointments();
       closeModal('newAppModal');
       e.target.reset();
@@ -881,43 +1116,35 @@
     function deleteAppointment(id) {
       if (confirm('هل ترغب بحذف هذا الموعد؟')) {
         AppData.appointments = AppData.appointments.filter(a => a.id !== id);
-        persist();
         renderAppointments();
       }
     }
 
-    // ================= المساعد الصوتي السريري الذكي =================
+    // القارئ الصوتي
     function speakDailySchedule() {
       if (!('speechSynthesis' in window)) {
-        alert("المتصفح لا يدعم القراءة الصوتية الذكية.");
+        alert("المتصفح لا يدعم القراءة الصوتية.");
         return;
       }
       window.speechSynthesis.cancel();
-
       const today = new Date().toISOString().split('T')[0];
       const matched = AppData.appointments.filter(a => a.date === today);
-
       const hour = new Date().getHours();
       const greeting = (hour < 12) ? "صباح الخير دكتور عمر" : "مساء الخير دكتور عمر";
 
       let speech = "";
       if (matched.length === 0) {
-        speech = `${greeting}. أهلاً بك في عيادتك. جدول مواعيد اليوم متاح وفارغ بالكامل، ولا توجد أي حجوزات مسجلة للمراجعين حتى الآن. نتمنى لك يوماً موفقاً وهادئاً.`;
+        speech = `${greeting}. أهلاً بك. جدول مواعيد اليوم فارغ، لا توجد حجوزات حتى الآن. نتمنى لك يوماً سعيداً.`;
       } else {
-        speech = `${greeting}. نود إعلامك بأن لديك اليوم في العيادة ${matched.length} مواعيد مجدولة. `;
-        matched.sort((a,b) => a.time.localeCompare(b.time)).forEach((apt, idx) => {
-          speech += `الموعد رقم ${idx + 1}، في تمام الساعة ${apt.time}، للمراجع ${apt.patientName}، الإجراء السريري المقرر هو ${apt.proc || 'معاينة وفحص'}. `;
+        speech = `${greeting}. لديك اليوم ${matched.length} مواعيد مجدولة. `;
+        matched.forEach((apt, idx) => {
+          speech += `الموعد ${idx + 1} في الساعة ${apt.time} للمراجع ${apt.patientName}، الإجراء: ${apt.proc || 'معاينة'}. `;
         });
-        speech += `نتمنى لك يوماً سعيداً وعملاً مكللاً بالنجاح دكتور عمر.`;
       }
 
       const utterance = new SpeechSynthesisUtterance(speech);
-      const voices = window.speechSynthesis.getVoices();
-      const arVoice = voices.find(v => v.lang.startsWith('ar'));
-      if (arVoice) utterance.voice = arVoice;
       utterance.lang = 'ar-SA';
       utterance.rate = 0.92;
-      utterance.pitch = 1.05;
       window.speechSynthesis.speak(utterance);
     }
 
@@ -938,7 +1165,7 @@
               <div style="display:flex; justify-content:space-between; align-items:center; background:var(--card-bg); padding:12px 16px; border-radius:12px; border:1px solid var(--card-border);">
                 <div>
                   <strong style="color:white;">${p.name}</strong>
-                  <div style="font-size:0.75rem; color:var(--text-dim);">${pay.date} | طريقة الدفع: ${pay.type === 'cash' ? '💵 كاش' : '💳 بطاقة'}</div>
+                  <div style="font-size:0.75rem; color:var(--text-dim);">${pay.date} | ${pay.type === 'cash' ? '💵 كاش' : '💳 بطاقة'}</div>
                 </div>
                 <div style="font-weight:900; color:var(--accent-blue);">${pay.amount.toLocaleString()} د.ع</div>
               </div>
@@ -952,84 +1179,10 @@
       document.getElementById('statDebt').innerText = debt.toLocaleString() + " د.ع";
     }
 
-    // التواصل عبر واتساب
-    function filterWhatsapp(filter, btn) {
-      if (btn) {
-        document.querySelectorAll('#tabWhatsapp .btn-ui').forEach(b => b.classList.remove('btn-emerald'));
-        btn.classList.add('btn-emerald');
-      }
-
-      const wrap = document.getElementById('whatsappList');
-      wrap.innerHTML = '';
-
-      let list = AppData.patients;
-      if (filter === 'ongoing') list = AppData.patients.filter(p => p.status === 'ongoing');
-      if (filter === 'debt') list = AppData.patients.filter(p => p.debt > 0);
-
-      list.forEach(p => {
-        const row = document.createElement('div');
-        row.style.cssText = "display:flex; justify-content:space-between; align-items:center; background:var(--card-bg); padding:12px 16px; border-radius:12px; border:1px solid var(--card-border);";
-        row.innerHTML = `
-          <div>
-            <strong style="color:white;">${p.name}</strong>
-            <div style="font-size:0.75rem; color:var(--text-dim);">هاتف: ${p.phone} | الديون: ${p.debt} د.ع</div>
-          </div>
-          <button class="btn-ui" style="background:#25D366; color:white; border:none;" onclick="sendWhatsapp('${p.phone}', '${p.name}')">
-            إرسال واتساب 📲
-          </button>
-        `;
-        wrap.appendChild(row);
-      });
-    }
-
-    function sendWhatsapp(phone, name) {
-      const clean = phone.replace(/^0/, '964');
-      const msg = encodeURIComponent(`مرحباً أستاذ ${name}، نود تذكيركم بموعدكم القادم في عيادة الدكتور عمر الحمداني لطب وجراحة الأسنان.`);
-      window.open(`https://wa.me/${clean}?text=${msg}`, '_blank');
-    }
-
-    // سجل التحركات
-    function addAudit(act) {
-      AppData.auditLogs.unshift({
-        user: "د. عمر الحمداني",
-        action: act,
-        time: new Date().toLocaleTimeString('ar-EG')
-      });
-      renderAudit();
-    }
-
-    function renderAudit() {
-      const wrap = document.getElementById('auditList');
-      wrap.innerHTML = '';
-      AppData.auditLogs.forEach(l => {
-        wrap.innerHTML += `
-          <div style="display:flex; justify-content:space-between; background:var(--card-bg); padding:12px; border-radius:10px; border-right:4px solid var(--primary); font-size:0.8rem;">
-            <div><strong>${l.user}:</strong> ${l.action}</div>
-            <span style="color:var(--text-dim); font-size:0.75rem;">${l.time}</span>
-          </div>
-        `;
-      });
-    }
-
-    // الطباعة والتصدير
-    function printTreatmentSheet() {
-      const p = AppData.patients.find(x => x.id === AppData.currentPatientId);
-      if (!p) return;
-
-      document.getElementById('printDateSpan').innerText = new Date().toLocaleDateString('ar-EG');
-      document.getElementById('printPtNameSpan').innerText = p.name;
-      const clone = document.getElementById('dentalChartBox').cloneNode(true);
-      const target = document.getElementById('printTarget');
-      target.innerHTML = '';
-      target.appendChild(clone);
-
-      window.print();
-    }
-
     function exportPatientsCsv() {
-      let csv = "\uFEFFالاسم,الهاتف,العمر,السكن,الحالة الصحية\n";
+      let csv = "\uFEFFالاسم,الهاتف,العمر,السكن,الحالة الصحية,تاريخ التسجيل,موعد الحجز\n";
       AppData.patients.forEach(p => {
-        csv += `"${p.name}","${p.phone}","${p.age}","${p.address || ''}","${p.healthAlert || 'سليم'}"\n`;
+        csv += `"${p.name}","${p.phone}","${p.age}","${p.address || ''}","${p.healthAlert || 'سليم'}","${p.entryDate || ''}","${p.appointmentDate || ''}"\n`;
       });
       const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
       const a = document.createElement('a');
@@ -1038,21 +1191,6 @@
       a.click();
     }
 
-    function exportPatientsWord() {
-      let html = "<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'><head><meta charset='utf-8'></head><body dir='rtl'><h2>سجل مراجعين عيادة الدكتور عمر الحمداني</h2><table border='1' cellspacing='0' cellpadding='6'>";
-      html += "<tr><th>الاسم</th><th>الهاتف</th><th>العمر</th><th>السكن</th><th>الحالة الصحية</th></tr>";
-      AppData.patients.forEach(p => {
-        html += `<tr><td>${p.name}</td><td>${p.phone}</td><td>${p.age}</td><td>${p.address || ''}</td><td>${p.healthAlert || 'سليم'}</td></tr>`;
-      });
-      html += "</table></body></html>";
-      const blob = new Blob(['\ufeff' + html], { type: 'application/msword' });
-      const a = document.createElement('a');
-      a.href = URL.createObjectURL(blob);
-      a.download = "سجل_المراجعين_د_عمر.doc";
-      a.click();
-    }
-
-    // دوال النوافذ
     function openModal(id) { document.getElementById(id).style.display = 'flex'; }
     function closeModal(id) { document.getElementById(id).style.display = 'none'; }
   </script>
