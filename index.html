@@ -7,6 +7,10 @@
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  
+  <!-- تحويل الملف إلى تطبيق هاتف وحاسوب مثبت PWA -->
+  <link rel="manifest" href="data:application/manifest+json,%7B%22name%22%3A%22%D8%B9%D9%8A%D8%A7%D8%AF%D8%A9%20%D8%A7%D9%84%D8%AF%D9%83%D8%AA%D9%88%D8%B1%20%D8%B9%D9%85%D8%B1%20%D8%A7%D9%84%D8%AD%D9%85%D8%AF%D8%A7%D9%86%D9%8A%22%2C%22short_name%22%3A%22%D8%A7%D9%84%D8%B9%D9%8A%D8%A7%D8%AF%D8%A9%22%2C%22start_url%22%3A%22.%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%2308121d%22%2C%22theme_color%22%3A%22%2300b48a%22%7D">
+
   <title>عيادة الدكتور عمر الحمداني - مجمع طب وجراحة الأسنان</title>
   
   <style>
@@ -348,8 +352,14 @@
 
     .finance-privacy-blur { filter: blur(8px); user-select: none; pointer-events: none; }
 
-    /* الطباعة الشاملة A4 */
-    #printableMasterSheet { display: none; background: white !important; color: #0f172a !important; padding: 24px; }
+    /* ================= تصميم تصدير وطباعة الـ PDF (A4 المعتمد) ================= */
+    @page {
+      size: A4 portrait;
+      margin: 10mm;
+    }
+
+    #printableMasterSheet { display: none; background: white !important; color: #0f172a !important; padding: 20px; }
+
     @media print {
       body * { visibility: hidden; }
       #printableMasterSheet, #printableMasterSheet * { visibility: visible; }
@@ -362,7 +372,7 @@
         background: white !important;
         color: #0f172a !important;
         margin: 0;
-        padding: 20px;
+        padding: 16px;
       }
     }
   </style>
@@ -420,7 +430,6 @@
           📋 دخول السكرتارية والاستقبال (مباشر)
         </button>
 
-        <!-- زر تفعيل الرخصة التجارية -->
         <button type="button" style="background:none; border:none; color:var(--accent-gold); font-size:0.72rem; cursor:pointer; text-decoration:underline;" onclick="openLicensePrompt()">
           🔑 ترخيص وتفعيل البرنامج تجارياً
         </button>
@@ -484,9 +493,7 @@
       </div>
 
       <div class="header-ctrls">
-        <!-- زر تثبيت البرنامج كتطبيق على الجهاز -->
-        <button class="btn-action" id="btnInstallApp" style="background:#0284c7; border:none;" onclick="triggerAppInstall()">📲 تثبيت كتطبيق</button>
-        <button class="btn-action" onclick="speakDailySchedule()">🔊 نطق المواعيد</button>
+        <button class="btn-action" id="btnInstallApp" style="background:#0284c7; border:none;" onclick="triggerAppInstall()">📲 تثبيت البرنامج</button>
         <button class="btn-action btn-emerald" onclick="openModal('newPatientModal')">➕ مراجع جديد</button>
       </div>
     </header>
@@ -509,10 +516,7 @@
             <h3 style="font-size:1.05rem; font-weight:900; color:var(--accent-blue);">المخطط التشريحي للفكين (3D Dental Arches)</h3>
             <p style="font-size:0.75rem; color:var(--text-dim);">المراجع المحدد: <strong id="chartPatientTitle" style="color:white;">--</strong></p>
           </div>
-          <div style="display:flex; gap:6px;">
-            <button class="btn-action btn-emerald" onclick="printMasterReportForCurrent()">🖨 طباعة التقرير (A4)</button>
-            <button class="btn-action" style="background:#0284c7; border:none;" onclick="exportPatientCardAsImage(AppData.currentPatientId)">🖼️ حفظ التقرير كصورة</button>
-          </div>
+          <button class="btn-action btn-emerald" onclick="exportPatientToPDF(AppData.currentPatientId)">📄 حفظ وتصدير PDF</button>
         </div>
 
         <div class="jaw-3d-wrapper" id="dentalChartBox">
@@ -866,20 +870,17 @@
           <div id="patientXrayPreview" style="margin-top:6px;"></div>
         </div>
 
-        <div style="display:flex; gap:6px;">
-          <button class="btn-action btn-emerald" style="flex:1; justify-content:center;" onclick="printMasterReportForCurrent()">🖨️ طباعة التقرير</button>
-          <button class="btn-action" style="flex:1; justify-content:center; background:#0284c7; border:none;" onclick="exportPatientCardAsImage(AppData.currentPatientId)">🖼️ تنزيل كصورة</button>
-        </div>
+        <button class="btn-action btn-emerald" style="justify-content:center;" onclick="exportPatientToPDF(AppData.currentPatientId)">📄 حفظ وتصدير PDF رسمي</button>
       </div>
     </div>
   </div>
 
-  <!-- ================= ورقة الطباعة الشاملة والروشتة A4 ================= -->
+  <!-- ================= ورقة الطباعة الشاملة والـ PDF (A4 المعتمد) ================= -->
   <div id="printableMasterSheet">
     <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:3px solid #00b48a; padding-bottom:12px; margin-bottom:14px;">
       <div>
         <h1 style="font-size:1.35rem; font-weight:900; color:#008f6f; margin-bottom:2px;">عيادة الدكتور عمر الحمداني</h1>
-        <p style="font-size:0.82rem; color:#475569; font-weight:bold;">مجمع طب وجراحة وتجميل الأسنان</p>
+        <p style="font-size:0.82rem; color:#475569; font-weight:bold;">مجمع طب وجراحة وتجميل الأسنان | الملف الطبي المعتمد</p>
       </div>
       <div style="text-align:left; font-size:0.78rem; color:#334155; line-height:1.4;">
         <p><strong>تاريخ التسجيل:</strong> <span id="prtEntryDate">--</span></p>
@@ -894,6 +895,13 @@
       <div><strong>رقم الهاتف:</strong> <span id="prtPhone">--</span></div>
       <div><strong>السكن:</strong> <span id="prtAddress">--</span></div>
       <div style="grid-column:span 2; color:#b91c1c;"><strong>الحساسية الدوائية:</strong> <span id="prtHealth">سليم</span></div>
+    </div>
+
+    <!-- الحساب المالي المطبوع -->
+    <div style="background:#f1f5f9; border:1px solid #cbd5e1; border-radius:8px; padding:8px 14px; margin-bottom:12px; display:flex; justify-content:space-between; font-size:0.8rem;">
+      <span><strong>التكلفة الكلية:</strong> <span id="prtCost">--</span> د.ع</span>
+      <span><strong>المدفوع:</strong> <span id="prtPaid" style="color:#008f6f;">--</span> د.ع</span>
+      <span><strong>المتبقي بذمته:</strong> <span id="prtDebt" style="color:#b91c1c; font-weight:bold;">--</span> د.ع</span>
     </div>
 
     <div style="border:1px solid #cbd5e1; border-radius:10px; padding:12px; margin-bottom:12px; text-align:center;">
@@ -926,9 +934,6 @@
       <div><strong>ختم العيادة الرسمي:</strong> ________________________</div>
     </div>
   </div>
-
-  <!-- عنصر كانفاس مخفي لحفظ تقرير المراجع كصورة -->
-  <canvas id="exportCanvas" style="display:none;"></canvas>
 
   <!-- ================= المنطق البرمجي ================= -->
   <script>
@@ -1047,12 +1052,10 @@
       setupPWA();
     });
 
-    // تحويل الأرقام المشرقية
     function normalizeDigits(str) {
       return str.replace(/[٠-٩]/g, d => d.charCodeAt(0) - 1632).trim();
     }
 
-    // التحقق من رمز الطبيب المشرف
     function handleDoctorPinSubmit(e) {
       if (e) e.preventDefault();
       const rawPin = document.getElementById('docPinInput').value;
@@ -1087,25 +1090,33 @@
       document.getElementById('newDocPinInput').value = '';
     }
 
-    // نظام الترخيص التجاري للبيع
     function openLicensePrompt() {
-      const key = prompt("أدخل كود الترخيص التجاري لتفعيل النسخة:\n(الكود الافتراضي للنسخة المرخصة: DENT-2026-PRO)", AppData.licenseKey);
+      const key = prompt("أدخل كود الترخيص التجاري لتفعيل النسخة:\n(كود التفعيل الافتراضي: DENT-2026-PRO)", AppData.licenseKey);
       if (key) {
         if (key.trim().toUpperCase() === "DENT-2026-PRO") {
           AppData.isLicensed = true;
           AppData.licenseKey = key.trim().toUpperCase();
           persist();
-          alert("تم تفعيل وترخيص برنامج العيادة بنجاح مدى الحياة! ✅");
+          alert("تم ترخيص وتفعيل البرنامج تجارياً بنجاح! ✅");
           document.getElementById('licenseStatusText').innerText = "النسخة مفعلة ومرخصة بالكامل ✅";
         } else {
-          alert("كود الترخيص التجاري غير صحيح!");
+          alert("كود الترخيص غير صالح.");
         }
       }
     }
 
-    // دعم تحويل الموقع إلى تطبيق مثبت (PWA)
+    // ================= تشغيل وتحويل الموقع إلى تطبيق مثبت PWA =================
     let deferredPrompt;
     function setupPWA() {
+      // تسجيل مشغل الخدمة في الخلفية (Service Worker)
+      if ('serviceWorker' in navigator) {
+        try {
+          const swCode = `self.addEventListener('fetch', function(e) {});`;
+          const blob = new Blob([swCode], {type: 'application/javascript'});
+          navigator.serviceWorker.register(URL.createObjectURL(blob)).catch(()=>{});
+        } catch(e) {}
+      }
+
       window.addEventListener('beforeinstallprompt', (e) => {
         e.preventDefault();
         deferredPrompt = e;
@@ -1124,7 +1135,7 @@
           deferredPrompt = null;
         });
       } else {
-        alert("لتثبيت التطبيق على هاتفك:\nاضغط على خيارات المتصفح (⋮) ثم اختر 'إضافة إلى الشاشة الرئيسية' (Add to Home Screen).");
+        alert("لتثبيت البرنامج كتطبيق مستقل على جهازك:\n- على الهاتف: اضغط خيارات المتصفح (⋮) ثم 'إضافة إلى الشاشة الرئيسية' أو 'تثبيت التطبيق'.\n- على الحاسوب (Chrome/Edge): اضغط على أيقونة التثبيت (⤓) في شريط العنوان أعلى المتصفح.");
       }
     }
 
@@ -1339,7 +1350,7 @@
             <button class="btn-pt-action" onclick="openEditPatientModal('${p.id}')">✏️ تعديل</button>
             <button class="btn-pt-action" onclick="openJawForPatient('${p.id}')">🦷 الفكين</button>
             <button class="btn-pt-action" onclick="openMedsModal('${p.id}')">💊 الأدوية</button>
-            <button class="btn-pt-action" style="background:#0284c7; color:white;" onclick="exportPatientCardAsImage('${p.id}')">🖼️ صورة</button>
+            <button class="btn-pt-action" style="background:#00b48a; color:#030811; font-weight:900;" onclick="exportPatientToPDF('${p.id}')">📄 PDF</button>
           </div>
         `;
         wrap.appendChild(card);
@@ -1530,166 +1541,8 @@
       reader.readAsDataURL(file);
     }
 
-    // ================= تصدير بطاقة وسجل المراجع كصورة PNG =================
-    function exportPatientCardAsImage(pId) {
-      const p = AppData.patients.find(x => x.id === pId);
-      if (!p) return;
-
-      const canvas = document.getElementById('exportCanvas');
-      const ctx = canvas.getContext('2d');
-
-      canvas.width = 900;
-      canvas.height = 1250;
-
-      // خلفية طبية داكنة فخمة
-      const grad = ctx.createLinearGradient(0, 0, 900, 1250);
-      grad.addColorStop(0, '#0a1928');
-      grad.addColorStop(0.5, '#071320');
-      grad.addColorStop(1, '#030811');
-      ctx.fillStyle = grad;
-      ctx.fillRect(0, 0, 900, 1250);
-
-      // إطار خارجي مذهب
-      ctx.strokeStyle = '#00b48a';
-      ctx.lineWidth = 6;
-      ctx.strokeRect(20, 20, 860, 1210);
-
-      // ترويسة العيادة
-      ctx.fillStyle = '#00b48a';
-      ctx.font = 'bold 36px system-ui';
-      ctx.textAlign = 'center';
-      ctx.fillText('عيادة الدكتور عمر الحمداني', 450, 80);
-
-      ctx.fillStyle = '#94a3b8';
-      ctx.font = '20px system-ui';
-      ctx.fillText('مجمع طب وجراحة وتجميل الأسنان | الملف الطبي الموثق', 450, 115);
-
-      // خط فاصل
-      ctx.strokeStyle = '#1e3a5a';
-      ctx.lineWidth = 2;
-      ctx.beginPath();
-      ctx.moveTo(50, 140);
-      ctx.lineTo(850, 140);
-      ctx.stroke();
-
-      // مربع بيانات المراجع
-      ctx.fillStyle = '#102235';
-      ctx.roundRect(50, 160, 800, 220, 14);
-      ctx.fill();
-
-      ctx.textAlign = 'right';
-      ctx.fillStyle = '#38bdf8';
-      ctx.font = 'bold 24px system-ui';
-      ctx.fillText(`المراجع: ${p.name}`, 820, 205);
-
-      ctx.fillStyle = '#f8fafc';
-      ctx.font = '20px system-ui';
-      ctx.fillText(`العمر: ${p.age} سنة   |   الهاتف: ${p.phone}`, 820, 250);
-      ctx.fillText(`السكن: ${p.address || 'الموصل'}   |   الطبيب المشرف: ${p.doctorName || 'د. عمر الحمداني'}`, 820, 290);
-      ctx.fillText(`تاريخ التسجيل: ${p.entryDate || '-'}   |   موعد الحجز: ${p.appointmentDate || 'لم يحدد'}`, 820, 330);
-
-      if (p.healthAlert) {
-        ctx.fillStyle = '#ef4444';
-        ctx.font = 'bold 20px system-ui';
-        ctx.fillText(`⚠️ تنبيه الحساسية: ${p.healthAlert}`, 820, 365);
-      }
-
-      // الحساب المالي
-      ctx.fillStyle = '#0a1726';
-      ctx.roundRect(50, 400, 800, 90, 12);
-      ctx.fill();
-      ctx.strokeStyle = '#1e3a5a';
-      ctx.stroke();
-
-      ctx.textAlign = 'center';
-      ctx.fillStyle = '#94a3b8';
-      ctx.font = '18px system-ui';
-      ctx.fillText('التكلفة الكلية', 200, 435);
-      ctx.fillText('المبلغ المدفوع', 450, 435);
-      ctx.fillText('المتبقي بذمة المراجع', 700, 435);
-
-      ctx.fillStyle = '#ffffff';
-      ctx.font = 'bold 22px system-ui';
-      ctx.fillText(`${(p.totalCost || 0).toLocaleString()} د.ع`, 200, 470);
-      ctx.fillStyle = '#00b48a';
-      ctx.fillText(`${(p.paidAmount || 0).toLocaleString()} د.ع`, 450, 470);
-      ctx.fillStyle = '#ef4444';
-      ctx.fillText(`${(p.debt || 0).toLocaleString()} د.ع`, 700, 470);
-
-      // سجل المعالجات والأسنان
-      ctx.textAlign = 'right';
-      ctx.fillStyle = '#00b48a';
-      ctx.font = 'bold 24px system-ui';
-      ctx.fillText('🦷 سجل إجراءات الأسنان والجلسات السريرية:', 820, 530);
-
-      ctx.fillStyle = '#102235';
-      ctx.roundRect(50, 550, 800, 260, 14);
-      ctx.fill();
-
-      let yPos = 590;
-      ctx.fillStyle = '#f8fafc';
-      ctx.font = '20px system-ui';
-      if (p.teeth && Object.keys(p.teeth).length > 0) {
-        Object.keys(p.teeth).slice(0, 7).forEach(tNum => {
-          const t = p.teeth[tNum];
-          const sessionText = t.session ? ` (${t.session})` : '';
-          const measureText = t.measurements ? ` - [${t.measurements}]` : '';
-          ctx.fillText(`• السن ${tNum}: ${t.note || t.status}${sessionText}${measureText}`, 820, yPos);
-          yPos += 35;
-        });
-      } else {
-        ctx.fillText('• لا توجد إجراءات مسجلة بعد.', 820, yPos);
-      }
-
-      // الوصفة الطبية (Rx)
-      ctx.fillStyle = '#38bdf8';
-      ctx.font = 'bold 24px system-ui';
-      ctx.fillText('℞ الوصفة الطبية والأدوية المقررة:', 820, 850);
-
-      ctx.fillStyle = '#102235';
-      ctx.roundRect(50, 870, 800, 200, 14);
-      ctx.fill();
-
-      let medY = 910;
-      ctx.fillStyle = '#ffffff';
-      ctx.font = '20px system-ui';
-      if (p.meds && p.meds.length > 0) {
-        p.meds.forEach((m, idx) => {
-          ctx.fillText(`${idx + 1}. ${m.name} - ${m.dose}`, 820, medY);
-          medY += 36;
-        });
-      } else {
-        ctx.fillText('• لا توجد أدوية مقررة حالياً.', 820, medY);
-      }
-
-      // التوقيع والختم
-      ctx.strokeStyle = '#1e3a5a';
-      ctx.beginPath();
-      ctx.moveTo(50, 1110);
-      ctx.lineTo(850, 1110);
-      ctx.stroke();
-
-      ctx.textAlign = 'right';
-      ctx.fillStyle = '#94a3b8';
-      ctx.font = '18px system-ui';
-      ctx.fillText('توقيع الدكتور عمر الحمداني: ___________________', 820, 1160);
-
-      ctx.textAlign = 'left';
-      ctx.fillText('ختم العيادة الرسمي: [ معتمد ]', 80, 1160);
-
-      // تنزيل الصورة
-      const link = document.createElement('a');
-      link.download = `تقرير_${p.name.replace(/\s+/g, '_')}_عيادة_الحمداني.png`;
-      link.href = canvas.toDataURL('image/png');
-      link.click();
-    }
-
-    // الطباعة الشاملة A4
-    function printMasterReportForCurrent() {
-      printMasterReport(AppData.currentPatientId);
-    }
-
-    function printMasterReport(pId) {
+    // ================= نظام تصدير وحفظ التقرير كـ PDF رسمي =================
+    function exportPatientToPDF(pId) {
       const p = AppData.patients.find(x => x.id === pId);
       if (!p) return;
 
@@ -1702,6 +1555,11 @@
       document.getElementById('prtAddress').innerText = p.address || 'الموصل - حي المصارف';
       document.getElementById('prtHealth').innerText = p.healthAlert || 'سليم، لا توجد أمراض أو حساسية';
       document.getElementById('prtDocNotes').innerText = p.docNotes || 'لا توجد ملاحظات إضافية.';
+
+      // الحساب المالي
+      document.getElementById('prtCost').innerText = (p.totalCost || 0).toLocaleString();
+      document.getElementById('prtPaid').innerText = (p.paidAmount || 0).toLocaleString();
+      document.getElementById('prtDebt').innerText = (p.debt || 0).toLocaleString();
 
       bindPatientToJaw(p.id);
       const jawClone = document.getElementById('dentalChartBox').cloneNode(true);
@@ -1741,10 +1599,10 @@
         xrayBox.style.display = 'none';
       }
 
+      // إطلاق نافذة الحفظ كـ PDF عبر المتصفح
       window.print();
     }
 
-    // المواعيد
     function renderAppointments() {
       const d = document.getElementById('appointmentDateFilter').value;
       const wrap = document.getElementById('appointmentsList');
@@ -1816,33 +1674,6 @@
         AppData.appointments = AppData.appointments.filter(a => a.id !== id);
         renderAppointments();
       }
-    }
-
-    function speakDailySchedule() {
-      if (!('speechSynthesis' in window)) {
-        alert("المتصفح لا يدعم القراءة الصوتية.");
-        return;
-      }
-      window.speechSynthesis.cancel();
-      const today = new Date().toISOString().split('T')[0];
-      const matched = AppData.appointments.filter(a => a.date === today);
-      const hour = new Date().getHours();
-      const greeting = (hour < 12) ? "صباح الخير دكتور عمر" : "مساء الخير دكتور عمر";
-
-      let speech = "";
-      if (matched.length === 0) {
-        speech = `${greeting}. أهلاً بك. جدول مواعيد اليوم فارغ، لا توجد حجوزات حتى الآن. نتمنى لك يوماً سعيداً.`;
-      } else {
-        speech = `${greeting}. لديك اليوم ${matched.length} مواعيد مجدولة. `;
-        matched.forEach((apt, idx) => {
-          speech += `الموعد ${idx + 1} في الساعة ${apt.time} للمراجع ${apt.patientName}، مع الطبيب ${apt.doctor || 'المشرف'}. `;
-        });
-      }
-
-      const utterance = new SpeechSynthesisUtterance(speech);
-      utterance.lang = 'ar-SA';
-      utterance.rate = 0.92;
-      window.speechSynthesis.speak(utterance);
     }
 
     function toggleFinancialPrivacy() {
